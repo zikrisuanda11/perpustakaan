@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_borrower')->constrained('users');
+            $table->foreignId('id_book')->constrained('books');
+            $table->integer('stock');
+            $table->date('loan_date');
+            $table->date('return_date');
+            $table->enum('status', ['borrowed', 'returned']);
             $table->timestamps();
         });
     }
