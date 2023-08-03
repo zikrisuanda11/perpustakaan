@@ -1,129 +1,106 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Default from "../../../Layouts/Default";
-import { MdAdd } from 'react-icons/md';
 import Buttons from "../../../Components/Button";
+import Breadcrumbs from "../../../Components/Breadcrumbs";
+import dayjs from "dayjs";
+import toast, { Toaster } from 'react-hot-toast';
+import { router } from "@inertiajs/react";
 
-export default function index({ books }) {
-  console.log(books);
+export default function index({ books, flash }) {
+  useEffect(() => {
+    if(flash.message){
+      toast.success(flash.message)
+      router.visit('/clear-flash', {
+        method: 'post'
+      });
+      
+    }
+  }, [flash.message])
+
+  const handleDelete = (id) => {
+    router.delete(`/admin/buku/${id}`);
+  }
+  // console.log(books);
   return (
     <Default>
+      <Toaster />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <h1 className="text-2xl font-semibold text-gray-900">Buku</h1>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-1">
-        <ol className="flex items-center gap-1 text-sm text-gray-600">
-          <li>
-            <a href="#" className="block transition hover:text-gray-700">
-              <span className="sr-only"> Home </span>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                />
-              </svg>
-            </a>
-          </li>
-
-          <li className="rtl:rotate-180">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </li>
-
-          <li>
-            <a href="#" className="block transition hover:text-gray-700"> Shirts </a>
-          </li>
-
-          <li className="rtl:rotate-180">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </li>
-
-          <li>
-            <a href="#" className="block transition hover:text-gray-700"> Plain Tee </a>
-          </li>
-        </ol>
+        <Breadcrumbs
+          attributes={[
+            { name: 'Buku', href: '/admin/buku' },
+          ]}
+        />
       </div>
-      <div className="mx-7 mt-5 border shadow-md rounded-xl p-5 flex flex-col gap-5">
+      <div className="mx-7 mt-5 border shadow-md rounded-xl p-5 flex flex-col gap-5 ">
         <div className="w-fit">
-          <Buttons title={"Tambah"} />
+          <Buttons title={"Tambah"} variant={'contained'} href={'/admin/buku/create'}/>
         </div>
-        <button className="border w-fit px-4 py-2 rounded-md bg-[#1da1f2] font-medium text-white">Tambah</button>
-        <table className="">
-          <thead className=" py-4">
-            <tr className="text-gray-500 border-b">
-              <th className="py-4">Judul</th>
-              <th className="py-4">Penerbit</th>
-              <th className="py-4">Pengarang</th>
-              <th className="py-4">Stok</th>
-              <th className="py-4">Tahun Rilis</th>
-              <th className="py-4">Aksi</th>
+        <table className="text-left text">
+          <thead className="">
+            <tr className="text-gray-500 border-b border-gray-100 uppercase">
+              <th className="">Judul & sampul</th>
+              <th className="">Penerbit</th>
+              <th className="">Pengarang</th>
+              <th className="">Stok</th>
+              <th className="">Tahun Rilis</th>
+              <th className=" text-center">Aksi</th>
             </tr>
           </thead>
-          <tbody className="py-4">
-            <tr className="text-center text-gray-600 border-b">
-              <td className="py-4">Filosofi Teras</td>
-              <td className="py-4">Manimpiring</td>
-              <td className="py-4">Gramedia</td>
-              <td className="py-4">100</td>
-              <td className="py-4">2023</td>
-              <td className="py-4 flex gap-5  items-center justify-center">
-                <button className="">Edit</button>
-                <button className="">Hapus</button>
-              </td>
-            </tr>
-            <tr className="text-center text-gray-600 border-b">
-              <td className="py-4">Filosofi Teras</td>
-              <td className="py-4">Manimpiring</td>
-              <td className="py-4">Gramedia</td>
-              <td className="py-4">100</td>
-              <td className="py-4">2023</td>
-              <td className="py-4 flex gap-5  items-center justify-center">
-                <button className="">Edit</button>
-                <button className="">Hapus</button>
-              </td>
-            </tr>
-            <tr className="text-center text-gray-600 border-b">
-              <td className="py-4">Filosofi Teras</td>
-              <td className="py-4">Manimpiring</td>
-              <td className="py-4">Gramedia</td>
-              <td className="py-4">100</td>
-              <td className="py-4">2023</td>
-              <td className="py-4 flex gap-5  items-center justify-center">
-                <button className="">Edit</button>
-                <button className="">Hapus</button>
-              </td>
-            </tr>
-          </tbody>
+          {books.data == 0 && (
+            <tbody className="h-52">
+              <tr className="text-center w-full">
+                <td className="" colSpan={6}>Data kosong</td>
+              </tr>
+            </tbody>
+          )}
+          {books.data.map((book) => {
+            if(book != null){
+              return (
+                <tbody className=" table-auto" key={book.id} >
+                  <tr className="text-gray-500 border-b border-gray-100">
+                    <td className=" flex items-center gap-5">
+                      <img src={book.book_image} alt="" className="h-16 w-auto p-1 border shadow-md"/>
+                      {book.title}
+                    </td>
+                    <td className="">{book.author}</td>
+                    <td className="">{book.publisher}</td>
+                    <td className="">{book.stock}</td>
+                    <td className="">{dayjs(book.release_year).format('YYYY')}</td>
+                    <td className="text-center">
+                      <Buttons title={"Edit"} variant={'contained'} />
+                      <span className="mx-2"></span>
+                      <Buttons title={"Hapus"} variant={'outlined'} onClick={() => handleDelete(book.id)}/>
+                    </td>
+                  </tr>
+                </tbody>
+              )
+            }else{
+              return (
+                <div>Data kosong</div>
+              )
+            }
+          })}
         </table>
+        <div className="w-full flex justify-end gap-5 text-gray-500">
+          <div>{books.from} - {books.to} to {books.total}</div>
+          <div className="">
+            <a href={books.prev_page_url}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </a>
+          </div>
+          <div>
+            <a href={books.next_page_url}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
     </Default>
   )
