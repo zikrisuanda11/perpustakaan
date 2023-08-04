@@ -1,15 +1,22 @@
 import React from "react"
-import { Button } from "@mui/material"
+import  Button from "@mui/material/Button"
 
-export default function Buttons({ title }) {
+export default function Buttons({type, color, onClick, href, title, variant, size }) {
   return (
     <>
       <Button
-        variant="contained"
+        type={type}
+        color={color}
+        size={size}
+        onClick={onClick}
+        href={href}
+        variant={variant}
         sx={{
-          width: 'auto'
+          width: 'auto',
         }}
-      >{title}</Button>
+      >
+        {title}
+      </Button>
     </>
   )
 }

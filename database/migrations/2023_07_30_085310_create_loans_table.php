@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->date('loan_date');
             $table->date('return_date');
-            $table->enum('status', ['borrowed', 'returned']);
+            $table->enum('status', ['pending','borrowed', 'returned']);
             $table->timestamps();
         });
     }

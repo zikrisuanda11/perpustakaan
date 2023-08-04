@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Default from "../../../Layouts/Default";
 import toast, { Toaster } from 'react-hot-toast';
-import { router, useForm } from "@inertiajs/react";
 import Breadcrumbs from "../../../Components/Breadcrumbs";
-import CreateEdit from "../../../Components/Book/CreateEdit";
+import CreateEdit from "../../../Components/Member/CreateEdit";
+import { router, useForm } from "@inertiajs/react";
 
-export default function create({ flash, types }) {
-  
-  const { data, setData, post, processing, errors } = useForm({
-    id_type: '',
-    title: '',
-    publisher: '',
-    author: '',
-    release_year: '',
-    stock: '',
-    location: '',
-    book_image: '',
+export default function create({flash, member}){
+  const { data, setData, put, processing, errors } = useForm({
+    name: member.name,
+    email: member.email,
+    address: member.address,
+    no_ktp: member.no_ktp,
+    phone: member.phone,
+    password: member.password,
   })
+  // console.log(data);
 
   useEffect(() => {
     if (flash.message) {
@@ -43,28 +41,28 @@ export default function create({ flash, types }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    post('/admin/buku', data)
+    put(`/admin/anggota/${member.id}`, data)
   }
 
   return (
     <Default>
       <Toaster position="top-right"/>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <h1 className="text-2xl font-semibold text-gray-900">Buku</h1>
+        <h1 className="text-2xl font-semibold text-gray-900">Anggota</h1>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-1">
         <Breadcrumbs
           attributes={[
-            { name: 'Buku', href: '/admin/buku' },
-            { name: 'Tambah', href: '/admin/buku/create' },
+            { name: 'Anggota', href: '/admin/anggota' },
+            { name: 'Edit', href: '/admin/anggota/create' },
           ]}
         />
       </div>
       <CreateEdit
-        types={types}
         setData={setData}
         handleSubmit={handleSubmit}
         data={data}
+        member={member}
       />
     </Default>
   )

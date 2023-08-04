@@ -26,7 +26,7 @@ function classNames(...classes) {
 export default function Default({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const {url} = usePage();
+  const { url } = usePage();
 
   const navigation = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: HomeIcon, current: url === '/admin/dashboard' },
@@ -37,8 +37,8 @@ export default function Default({ children }) {
 
   return (
     <>
-      <div className='font-inter'>
-        <Transition.Root show={sidebarOpen} as={Fragment}>
+      <div className=''>
+        {/* <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden" onClose={setSidebarOpen}>
             <Transition.Child
               as={Fragment}
@@ -114,21 +114,21 @@ export default function Default({ children }) {
               </div>
             </Transition.Child>
             <div className="flex-shrink-0 w-14" aria-hidden="true">
-              {/* Dummy element to force sidebar to shrink to fit close icon */}
+              
             </div>
           </Dialog>
-        </Transition.Root>
+        </Transition.Root> */}
 
         {/* Static sidebar for desktop */}
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex-1 flex flex-col min-h-0 bg-gray-900">
-            <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900">
+            <div className="flex items-center h-16 flex-shrink-0  bg-gray-800  rounded-xl">
               <img
-                className="h-8 w-auto text-white"
-                // src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+                className="h-10 w-auto text-white"
+                src="/assets/Logo/logo.png"
                 alt="ini logo"
               />
+              <p className='text-white'>Admin Perpustakaan</p>
             </div>
             <div className="flex-1 flex flex-col overflow-y-auto">
               <nav className="flex-1 px-2 py-4 space-y-1">
@@ -167,7 +167,7 @@ export default function Default({ children }) {
             </button>
             <div className="flex-1 px-4 flex justify-between">
               <div className="flex-1 flex items-center">
-                <img src="" alt="ini_logo" />
+                <img src="/assets/Logo/logo.png" alt="ini_logo" className='h-10 w-auto' />
               </div>
               <div className="ml-4 flex items-center md:ml-6">
                 <button

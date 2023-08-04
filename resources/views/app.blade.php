@@ -9,10 +9,10 @@
     @vite('resources/js/app.jsx')
     @vite('resources/css/app.css')
     @inertiaHead
-    {{-- <link href="https://fonts.cdnfonts.com/css/bronson-2" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/bronson-2" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/sofia-pro" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/discovercardts-countdown" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet"> --}}
+    <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet">
 </head>
 
 <body>

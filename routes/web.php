@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\Admin\BookController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\LoanController;
-use App\Http\Controllers\Admin\MemberController;
-use App\Http\Controllers\LandingController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\LoanController;
+use App\Http\Controllers\Admin\TypeController;
+use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +25,18 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [LandingController::class, 'index']);
+Route::post('/clear-flash', function (Request $request) {
+  $request->session()->forget('message');
+  $request->session()->forget('error');
+});
 
 Route::prefix('admin')->group(function(){
   Route::get('dashboard', [DashboardController::class, 'index']);
-  Route::resource('buku', BookController::class);
+  Route::resource('buku', BookController::class)->except('update');
+  Route::post('buku/{id}', [BookController::class, 'update']);
   Route::resource('peminjaman', LoanController::class);
   Route::resource('anggota', MemberController::class);
-
+  
+  Route::post('type', [TypeController::class, 'store']);
+  Route::delete('type/{id}', [TypeController::class, 'destroy']);
 });

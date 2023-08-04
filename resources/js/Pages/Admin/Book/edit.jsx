@@ -5,17 +5,18 @@ import { router, useForm } from "@inertiajs/react";
 import Breadcrumbs from "../../../Components/Breadcrumbs";
 import CreateEdit from "../../../Components/Book/CreateEdit";
 
-export default function create({ flash, types }) {
+export default function create({ flash, types, book }) {
+  // console.log(book);
   
   const { data, setData, post, processing, errors } = useForm({
-    id_type: '',
-    title: '',
-    publisher: '',
-    author: '',
-    release_year: '',
-    stock: '',
-    location: '',
-    book_image: '',
+    id_type: book.id_type,
+    title: book.title,
+    publisher: book.publisher,
+    author: book.author,
+    release_year: book.release_year,
+    stock: book.stock,
+    location: book.location,
+    book_image: book.book_image,
   })
 
   useEffect(() => {
@@ -31,24 +32,16 @@ export default function create({ flash, types }) {
         method: 'post'
       });
     }
-    if(Object.keys(errors).length != 0){
-      Object.values(errors).forEach(errorMessage => {
-        toast.error(errorMessage);
-      });
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
-    }
-  }, [flash.message, flash.error, Object.keys(errors).length != 0])
+  }, [flash.message, flash.error])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    post('/admin/buku', data)
+    post(`/admin/buku/${book.id}`, data)
   }
 
   return (
     <Default>
-      <Toaster position="top-right"/>
+      <Toaster />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <h1 className="text-2xl font-semibold text-gray-900">Buku</h1>
       </div>
@@ -56,7 +49,7 @@ export default function create({ flash, types }) {
         <Breadcrumbs
           attributes={[
             { name: 'Buku', href: '/admin/buku' },
-            { name: 'Tambah', href: '/admin/buku/create' },
+            { name: 'Edit', href: `/admin/buku/${book.id}/edit` },
           ]}
         />
       </div>
@@ -64,6 +57,7 @@ export default function create({ flash, types }) {
         types={types}
         setData={setData}
         handleSubmit={handleSubmit}
+        book={book}
         data={data}
       />
     </Default>

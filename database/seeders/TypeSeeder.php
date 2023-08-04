@@ -13,11 +13,12 @@ class TypeSeeder extends Seeder
      */
     public function run(): void
     {
-        Type::create([
-            'name' => 'novel'
-        ]);
-        Type::create([
-            'name' => 'science'
-        ]);
+        // Type::create([
+        //     'name' => 'novel'
+        // ]);
+        // Type::create([
+        //     'name' => 'science'
+        // ]);
+        Type::factory()->count(25)->create();
     }
 }

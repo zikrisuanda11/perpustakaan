@@ -23,9 +23,9 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password')
         ]);
 
-        $pengunjung = User::create([
-            'name' => 'pengunjung',
-            'email' => 'pengunjung@gmail.com',
+        $anggota = User::create([
+            'name' => 'anggota',
+            'email' => 'anggota@gmail.com',
             'address' => fake()->address(),
             'no_ktp' => fake()->randomNumber(9, true),
             'phone' => fake()->phoneNumber(),
@@ -33,6 +33,6 @@ class UserSeeder extends Seeder
         ]);
 
         $admin->assignRole('admin');
-        $pengunjung->assignRole('pengunjung');
+        $anggota->assignRole('anggota');
     }
 }
