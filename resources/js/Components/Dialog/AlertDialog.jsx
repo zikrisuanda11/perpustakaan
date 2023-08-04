@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AlertDialog({ open, handleCloseAlertDialog, title, description, handleDelete }) {
+export default function AlertDialog({ open, handleCloseAlertDialog, title, description, handleOnClick, buttonTitle = 'Hapus' }) {
 
   return (
     <div>
@@ -32,10 +32,10 @@ export default function AlertDialog({ open, handleCloseAlertDialog, title, descr
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDelete} autoFocus variant='outlined'>
-            Hapus
+          <Button onClick={handleOnClick} autoFocus variant='outlined'>
+            {buttonTitle}
           </Button>
-          <Button onClick={handleCloseAlertDialog} variant='contained'>Kembali</Button>
+          <Button onClick={handleCloseAlertDialog} variant='contained'>Tutup</Button>
         </DialogActions>
       </Dialog>
     </div>

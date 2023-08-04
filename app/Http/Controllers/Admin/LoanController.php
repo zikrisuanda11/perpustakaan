@@ -16,4 +16,24 @@ class LoanController extends Controller
             'loans' => $loans
         ]);
     }
+
+    public function returned($id)
+    {
+        $loan = Loan::find($id);
+        $loan->update([
+            'status' => 'returned'
+        ]);
+
+        session()->flash('message', 'Berhasil mengambalikan buku');
+    }
+
+    public function accepted($id)
+    {
+        $loan = Loan::find($id);
+        $loan->update([
+            'status' => 'borrowed'
+        ]);
+
+        session()->flash('message', 'Berhasil meminjamkan buku');
+    }
 }

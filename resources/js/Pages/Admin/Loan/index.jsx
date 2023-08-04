@@ -10,17 +10,24 @@ import Warning from "../../../Components/Badges/Warning";
 import Error from "../../../Components/Badges/Error";
 
 export default function index({ loans, flash }) {
-  
-  const [openAlerDialog, setOpenAlertDialog] = useState(false);
-  const [idBook, setIdBook] = useState();
 
-  const handleClickOpenAlertDialog = (id) => {
-    setOpenAlertDialog(true);
-    setIdBook(id);
+  const [openAlertDialogReturned, setOpenAlertDialogReturned] = useState(false);
+  const [openAlertDialogAccept, setOpenAlertDialogAccept] = useState(false);
+  const [idLoan, setIdLoan] = useState();
+
+  const handleClickOpenAlertDialogAccept = (id) => {
+    setOpenAlertDialogAccept(true);
+    setIdLoan(id)
+  };
+
+  const handleClickOpenAlertDialogReturned = (id) => {
+    setOpenAlertDialogReturned(true);
+    setIdLoan(id)
   };
 
   const handleCloseAlertDialog = () => {
-    setOpenAlertDialog(false);
+    setOpenAlertDialogReturned(false);
+    setOpenAlertDialogAccept(false);
   };
 
   useEffect(() => {
@@ -33,23 +40,40 @@ export default function index({ loans, flash }) {
     }
   }, [flash.message])
 
-  const handleDelete = (id) => {
-    router.delete(`/admin/peminjaman/${id}`);
+  // const handleDelete = (id) => {
+  //   router.delete(`/admin/peminjaman/${id}`);
+  // }
+
+  const handleReturned = (id) => {
+    router.put(`/admin/peminjaman/returned/${id}`);
   }
 
-  const handleEdit = (id) => {
-    router.get(`/admin/peminjaman/${id}/edit`)
+  const handleAccepted = (id) => {
+    router.put(`/admin/peminjaman/accepted/${id}`);
+  }
+
+  const handleDetail = (id) => {
+    router.get(`/admin/peminjaman`)
   }
 
   return (
     <Default>
       <Toaster />
       <AlertDialog
-        title={"Yakin ingin menghapus peminjaman?"}
-        description={"Dengan menghapus data peminjaman data tidak dapat dikembalikan!"}
-        open={openAlerDialog}
+        title={"Yakin ingin meminjamkan buku?"}
+        description={"Pastikan buku yang dipinjamkan tersedia"}
+        open={openAlertDialogReturned}
         handleCloseAlertDialog={handleCloseAlertDialog}
-        handleDelete={() => handleDelete(idBook)}
+        buttonTitle="Kembali"
+        handleOnClick={() => {handleReturned(idLoan)}}
+      />
+      <AlertDialog
+        title={"Yakin ingin mengembalikan peminjaman?"}
+        description={"Pastikan keadaan buku"}
+        open={openAlertDialogAccept}
+        handleCloseAlertDialog={handleCloseAlertDialog}
+        buttonTitle="Terima"
+        handleOnClick={() => {handleAccepted(idLoan)}}
       />
       <div className="flex items-center justify-between">
         <div>
@@ -64,21 +88,12 @@ export default function index({ loans, flash }) {
             />
           </div>
         </div>
-        {/* <div className="w-fit mx-7">
-          <Buttons title={"Tambah"} variant={'contained'} href={'/admin/peminjaman/create'} />
-        </div> */}
       </div>
       <div className="mx-7 mt-5 border shadow-md rounded-xl p-5 flex flex-col gap-5 ">
         <table className="text-left text">
           <thead className="">
-          {/* $table->foreignId('id_borrower')->constrained('users');
-            $table->foreignId('id_book')->constrained('books');
-            $table->integer('stock');
-            $table->date('loan_date');
-            $table->date('return_date');
-            $table->enum('status', ['borrowed', 'returned']); */}
             <tr className="text-gray-500 border-b border-gray-100 uppercase">
-              <th className="py-3">Nama</th>
+              <th className="py-3 px-2">Nama Peminjam</th>
               <th className="py-3">Judul Buku</th>
               <th className="py-3">Tanggal Peminjaman</th>
               <th className="py-3">Tanggal Pengembalian</th>
@@ -94,28 +109,28 @@ export default function index({ loans, flash }) {
             </tbody>
           )}
           {loans.data.map((loan) => {
-            if (loan != null) {
-              return (
-                <tbody className=" table-auto" key={loan.id} >
-                  <tr className="text-gray-500 border-b border-gray-100">
-                    <td className="py-3">{loan.user.name}</td>
-                    <td className="py-3">{loan.book.title}</td>
-                    <td className="py-3">{loan.loan_date}</td>
-                    <td className="py-3">{loan.return_date}</td>
-                    <td className="py-3">{loan.status == 'returned' ? <Success title={'Kembali'}/> : loan.status == 'borrowed' ? <Warning title={'Dipinjam'}/> : <Error title={'Pending'}/>}</td>
-                    <td className="py-3 text-center">
-                      <Buttons title={"Kembali"} variant={'outlined'} onClick={() => handleClickOpenAlertDialog(loan.id)} />
-                      <span className="mx-2"></span>
-                      <Buttons title={"Detail"} variant={'contained'} onClick={() => handleEdit(loan.id)} />
-                    </td>
-                  </tr>
-                </tbody>
-              )
-            } else {
-              return (
-                <div>Data kosong</div>
-              )
-            }
+            return (
+              <tbody className=" table-auto" key={loan.id} >
+                <tr className="text-gray-500 border-b border-gray-100">
+                  <td className="py-3 px-2">{loan.user.name}</td>
+                  <td className="py-3">{loan.book.title}</td>
+                  <td className="py-3">{loan.loan_date}</td>
+                  <td className="py-3">{loan.return_date}</td>
+                  <td className="py-3">{loan.status == 'returned' ? <Success title={'Kembali'} /> : loan.status == 'borrowed' ? <Warning title={'Dipinjam'} /> : <Error title={'Pending'} />}</td>
+                  <td className="py-3 justify-center flex">
+                    {/* <BasicMenu
+                        status={loan.status}
+                      /> */}
+                    {loan.status == 'pending' ? (
+                      <Buttons title={"Terima"} variant={'outlined'} onClick={() => handleClickOpenAlertDialogAccept(loan.id)} />
+                    ) : loan.status == 'borrowed' ? (
+                      <Buttons title={"Kembali"} variant={'outlined'} onClick={() => handleClickOpenAlertDialogReturned(loan.id)} />
+                    ) : null}
+                    <span className="mx-2"></span>
+                  </td>
+                </tr>
+              </tbody>
+            )
           })}
         </table>
         <div className="w-full flex justify-end gap-5 text-gray-500">

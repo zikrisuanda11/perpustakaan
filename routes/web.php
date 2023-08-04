@@ -34,7 +34,9 @@ Route::prefix('admin')->group(function(){
   Route::get('dashboard', [DashboardController::class, 'index']);
   Route::resource('buku', BookController::class)->except('update');
   Route::post('buku/{id}', [BookController::class, 'update']);
-  Route::resource('peminjaman', LoanController::class);
+  Route::get('peminjaman', [LoanController::class, 'index']);
+  Route::put('peminjaman/returned/{id}', [LoanController::class, 'returned']);
+  Route::put('peminjaman/accepted/{id}', [LoanController::class, 'accepted']);
   Route::resource('anggota', MemberController::class);
   
   Route::post('type', [TypeController::class, 'store']);

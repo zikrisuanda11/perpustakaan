@@ -46,7 +46,7 @@ export default function index({ books, flash }) {
         description={"Dengan menghapus data buku data tidak dapat dikembalikan!"}
         open={openAlerDialog}
         handleCloseAlertDialog={handleCloseAlertDialog}
-        handleDelete={() => handleDelete(idBook)}
+        handleOnClick={() => handleDelete(idBook)}
       />
       <div className="flex items-center justify-between">
         <div>

@@ -9,11 +9,12 @@ import AlertDialog from "../../../Components/Dialog/AlertDialog";
 
 export default function index({ members, flash }) {
   const [openAlerDialog, setOpenAlertDialog] = useState(false);
-  const [idBook, setIdBook] = useState();
+  const [idMember, setIdMember] = useState();
+  console.log(idMember);
 
   const handleClickOpenAlertDialog = (id) => {
     setOpenAlertDialog(true);
-    setIdBook(id);
+    setIdMember(id);
   };
 
   const handleCloseAlertDialog = () => {
@@ -46,7 +47,7 @@ export default function index({ members, flash }) {
         description={"Dengan menghapus data anggota data tidak dapat dikembalikan!"}
         open={openAlerDialog}
         handleCloseAlertDialog={handleCloseAlertDialog}
-        handleDelete={() => handleDelete(idBook)}
+        handleOnClick={() => handleDelete(idMember)}
       />
       <div className="flex items-center justify-between">
         <div>

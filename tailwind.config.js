@@ -12,7 +12,10 @@ export default {
         'bronson': ['bronson', 'sans-serif'],
         'sofia': ['Sofia Pro', 'sans-serif'],
         'discover': ['discovercardt.s. countdown.', 'sans-serif'],
-        'inter': ['Inter', 'sans-serif']
+        'inter': ['Inter', 'sans-serif'],
+        'rubik': ['Rubik', 'sans-serif'],
+        'rambla': ['Rambla', 'sans-serif'],
+        'karla': ['Karla', 'sans-serif']
       }
     },
     // colors: {
