@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\LoanController;
 use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\User\BookController as UserBookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ use App\Http\Controllers\Admin\DashboardController;
 // });
 
 Route::get('/', [LandingController::class, 'index']);
+Route::get('/buku', [UserBookController::class, 'index']);
 Route::post('/clear-flash', function (Request $request) {
   $request->session()->forget('message');
   $request->session()->forget('error');

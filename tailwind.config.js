@@ -8,6 +8,10 @@ export default {
 ],
   theme: {
     extend: {
+      colors: {
+        'primary': '#11418B',
+        'secondary': '#1976D2'
+      },
       fontFamily:{
         'bronson': ['bronson', 'sans-serif'],
         'sofia': ['Sofia Pro', 'sans-serif'],
@@ -18,6 +22,10 @@ export default {
         'karla': ['Karla', 'sans-serif']
       }
     },
+
+    // height: {
+    //   '128': '37.5rem',
+    // }
     // colors: {
     //   'secondary': '#11418b'
     // }

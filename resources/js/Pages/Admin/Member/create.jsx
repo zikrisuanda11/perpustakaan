@@ -14,7 +14,7 @@ export default function create({flash}){
     phone: '',
     password: '',
   })
-  console.log(data);
+  // console.log(errors);
 
   useEffect(() => {
     if (flash.message) {
