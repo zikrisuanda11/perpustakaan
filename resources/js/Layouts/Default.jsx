@@ -10,13 +10,13 @@ import {
   BookOpenIcon,
   BookmarkIcon
 } from '@heroicons/react/outline';
-import { usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', href: '/logout', method: 'post' },
 ]
 
 function classNames(...classes) {
@@ -122,7 +122,8 @@ export default function Default({ children }) {
                       {userNavigation.map((item) => (
                         <Menu.Item key={item.name}>
                           {({ active }) => (
-                            <a
+                            <Link
+                              method={item.method}
                               href={item.href}
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
@@ -130,7 +131,7 @@ export default function Default({ children }) {
                               )}
                             >
                               {item.name}
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                       ))}

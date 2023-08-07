@@ -1,44 +1,49 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
+import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import { Avatar } from '@mui/material';
 
-export default function BasicMenu({status}) {
+export default function BasicMenu({handleLogout}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   return (
     <div>
-      <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
+      <IconButton
+        size="large"
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-        variant='outlined'
+        onClick={handleMenu}
+        color="inherit"
       >
-        Aksi
-      </Button>
+        <Avatar>U</Avatar>
+      </IconButton>
       <Menu
-        id="basic-menu"
+        id="menu-appbar"
         anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
       >
-        {status == 'pending' ? (
-          <MenuItem onClick={handleClose}>Terima</MenuItem>
-        ): status == 'borrowed' ? (
-          <MenuItem onClick={handleClose}>Kembali</MenuItem>
-        ): null}
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );

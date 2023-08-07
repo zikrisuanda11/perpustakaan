@@ -1,4 +1,5 @@
 import React from "react";
+import NavPublic from "../../Components/Navbar/NavPublic";
 
 export default function Landing() {
   return (
@@ -7,33 +8,7 @@ export default function Landing() {
         <img src="/assets/image/nav_bg.png" alt="" className="absolute h-[36rem] z-10" />
       </div>
       {/* top */}
-      <div className="mx-28 relative mt-8 z-20">
-        <nav className="font-rubik flex justify-between">
-          <img src="/assets/Logo/logo.png" alt="" className="h-12 " />
-          {/* <div className="text-3xl">
-            Perpustakaan 
-            <span className="font-bold">Damai</span>
-          </div> */}
-          <div className="flex gap-10 items-center">
-            <div className="flex gap-10 text-white font-medium">
-              <a href="/" className="border-b-2 pb-1">Home</a>
-              <a href="/buku">Book</a>
-              <a>Blog</a>
-            </div>
-            <button className="px-10 py-2 bg-white rounded-3xl font-medium text-secondary border-white">Log in</button>
-          </div>
-        </nav>
-        <div className="flex justify-between">
-          <div className="flex flex-col justify-center w-6/12 gap-5">
-            <div className="text-8xl font-bold capitalize">Perpustakaan Damai</div>
-            <div className="text-2xl font-discover">Temukan buku favorit anda disini dan baca dengan gratis</div>
-            <a href="/buku" className="bg-primary text-white w-fit font-medium px-6 py-2 rounded-sm hover:shadow-xl hover:duration-100">Selengkapnya</a>
-          </div>
-          <div>
-            <img src="/assets/image/avatar.png" alt="" />
-          </div>
-        </div>
-      </div>
+      <NavPublic/>
 
       {/* content */}
       <div className="bg-gray-100 border border-gray-100">
@@ -41,18 +16,18 @@ export default function Landing() {
           <aside className="flex flex-col gap-10 w-2/12">
             <div className="flex flex-col gap-2">
               <h3 className="px-2 font-bold">Book By Genre</h3>
-              <a href="#" className="px-2 bg-white rounded-md shadow-sm">All Genre</a>
-              <a href="#" className="px-2">Business</a>
-              <a href="#" className="px-2">Science</a>
-              <a href="#" className="px-2">Fiction</a>
-              <a href="#" className="px-2">Philosophy</a>
+              <a href="#" className="px-2 py-1 bg-white rounded-md shadow-sm">All Genre</a>
+              <a href="#" className="px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500">Business</a>
+              <a href="#" className="px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500">Science</a>
+              <a href="#" className="px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500">Fiction</a>
+              <a href="#" className="px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500">Philosophy</a>
             </div>
             <div className="flex flex-col gap-2">
               <h3 className="px-2 font-bold">Recommendation</h3>
-              <a href="#" className="px-2">Artist of the month</a>
-              <a href="#" className="px-2">Book of the year</a>
-              <a href="#" className="px-2">Top genre</a>
-              <a href="#" className="px-2">Trending</a>
+              <a href="#" className="px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500">Artist of the month</a>
+              <a href="#" className="px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500">Book of the year</a>
+              <a href="#" className="px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500">Top genre</a>
+              <a href="#" className="px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500">Trending</a>
             </div>
           </aside>
           <div className="w-10/12 flex flex-col gap-20">

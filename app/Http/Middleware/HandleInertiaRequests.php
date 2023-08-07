@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Mockery\Undefined;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -40,7 +41,8 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => $request->session()->get('message'),
                 'error' => $request->session()->get('error')
-            ]
+            ],
+            'auth' => auth()->user() ? auth()->user()->load('roles') : ''
         ]);
     }
 }

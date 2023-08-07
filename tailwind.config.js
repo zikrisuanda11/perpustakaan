@@ -10,7 +10,8 @@ export default {
     extend: {
       colors: {
         'primary': '#11418B',
-        'secondary': '#1976D2'
+        'secondary': '#1976D2',
+        'third': '#3E97FF'
       },
       fontFamily:{
         'bronson': ['bronson', 'sans-serif'],
