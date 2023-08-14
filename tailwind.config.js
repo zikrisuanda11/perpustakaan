@@ -21,7 +21,10 @@ export default {
         'rubik': ['Rubik', 'sans-serif'],
         'rambla': ['Rambla', 'sans-serif'],
         'karla': ['Karla', 'sans-serif']
-      }
+      },
+      // backgroundImage: {
+      //   'nav-bg': "url('/assets/image/nav_bg.png')"
+      // }
     },
 
     // height: {

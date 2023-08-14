@@ -6,7 +6,7 @@ use App\Models\Loan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class LoanSeed extends Seeder
+class LoanSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -2,13 +2,12 @@ import React from 'react'
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
-  BellIcon,
   HomeIcon,
   MenuAlt2Icon,
   UsersIcon,
-  XIcon,
   BookOpenIcon,
-  BookmarkIcon
+  BookmarkIcon,
+  CogIcon
 } from '@heroicons/react/outline';
 import { Link, usePage } from '@inertiajs/react';
 
@@ -32,7 +31,8 @@ export default function Default({ children }) {
     { name: 'Dashboard', href: '/admin/dashboard', icon: HomeIcon, current: url === '/admin/dashboard' },
     { name: 'Buku', href: '/admin/buku', icon: BookOpenIcon, current: url === '/admin/buku' },
     { name: 'Peminjaman', href: '/admin/peminjaman', icon: BookmarkIcon, current: url === '/admin/peminjaman' },
-    { name: 'Member', href: '/admin/anggota', icon: UsersIcon, current: url === '/admin/anggota' },
+    { name: 'Anggota', href: '/admin/anggota', icon: UsersIcon, current: url === '/admin/anggota' },
+    { name: 'Pengaturan', href: '/admin/pengaturan', icon: CogIcon, current: url === '/admin/pengaturan' },
   ]
 
   return (
@@ -89,13 +89,6 @@ export default function Default({ children }) {
                 <img src="/assets/Logo/logo.png" alt="ini_logo" className='h-10 w-auto' />
               </div>
               <div className="ml-4 flex items-center md:ml-6">
-                <button
-                  type="button"
-                  className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="ml-3 relative">

@@ -1,16 +1,9 @@
 import React from "react";
-import NavPublic from "../../Components/Navbar/NavPublic";
+import Member from "../../Layouts/Member";
 
 export default function Landing() {
   return (
-    <main>
-      <div className="flex relative justify-end border-red-500">
-        <img src="/assets/image/nav_bg.png" alt="" className="absolute h-[36rem] z-10" />
-      </div>
-      {/* top */}
-      <NavPublic/>
-
-      {/* content */}
+    <Member>
       <div className="bg-gray-100 border border-gray-100">
         <div className="flex my-10 ml-20 gap-10 ">
           <aside className="flex flex-col gap-10 w-2/12">
@@ -132,15 +125,6 @@ export default function Landing() {
           </div>
         </div>
       </div>
-
-      <footer className="h-16 bg-[#11418B] flex items-center justify-between px-20 text-white">
-        <div>Copyright 2023 ©️ Perpustakaan Damai</div>
-        <div></div>
-        <div className="font-thin flex gap-2">
-          <a href="#">Privacy policy</a>
-          <a href="#">Terms & condition</a>
-        </div>
-      </footer>
-    </main>
+    </Member>
   )
 }

@@ -23,20 +23,22 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
-            'address'  => ['required', 'max:255', 'string'],
-            'no_ktp'  => ['required', 'max:16', 'string'],
-            'phone'  => ['required', 'max:13', 'string'],
-            'password' => ['required', 'confirmed', Password::defaults()],
+            // 'address'  => ['required', 'max:255', 'string'],
+            // 'no_ktp'  => ['required', 'max:16', 'string'],
+            // 'phone'  => ['required', 'max:13', 'string'],
+            'password' => ['required', Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'address' => $request->address,
-            'no_ktp' => $request->no_ktp,
-            'phone' => $request->phone,
+            // 'address' => $request->address,
+            // 'no_ktp' => $request->no_ktp,
+            // 'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->assignRole('anggota');
 
         Auth::login($user);
 

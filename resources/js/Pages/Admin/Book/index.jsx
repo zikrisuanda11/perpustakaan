@@ -11,6 +11,8 @@ export default function index({ books, flash }) {
   const [openAlerDialog, setOpenAlertDialog] = useState(false);
   const [idBook, setIdBook] = useState();
 
+  console.log(books);
+
   const handleClickOpenAlertDialog = (id) => {
     setOpenAlertDialog(true);
     setIdBook(id);
@@ -69,6 +71,7 @@ export default function index({ books, flash }) {
         <table className="text-left text">
           <thead className="">
             <tr className="text-gray-500 border-b border-gray-100 uppercase">
+              <th className="py-3">Kode</th>
               <th className="py-3">Judul & sampul</th>
               <th className="py-3">Penerbit</th>
               <th className="py-3">Pengarang</th>
@@ -87,10 +90,15 @@ export default function index({ books, flash }) {
           {books.data.map((book) => {
             if (book != null) {
               return (
-                <tbody className=" table-auto" key={book.id} >
+                <tbody className=" table-auto" key={book.code} >
                   <tr className="text-gray-500 border-b border-gray-100">
+                    <td className="py-3">{book.code}</td>
                     <td className="py-3 flex items-center gap-5">
-                      <img src={book.book_image} alt="" className="h-16 w-auto p-1 border shadow-md" />
+                      {book.book_image ? (
+                        <img src={book.book_image} alt="" className="h-16 w-auto p-1 border shadow-md" />
+                        ): (
+                        <img src='/assets/image/image-thumbnail.png' alt="" className="h-16 w-auto p-1 border shadow-md" />
+                      )}
                       {book.title}
                     </td>
                     <td className="py-3">{book.author}</td>
@@ -98,9 +106,9 @@ export default function index({ books, flash }) {
                     <td className="py-3">{book.stock}</td>
                     <td className="py-3">{dayjs(book.release_year).format('YYYY')}</td>
                     <td className="py-3 text-center">
-                      <Buttons title={"Hapus"} variant={'outlined'} onClick={() => handleClickOpenAlertDialog(book.id)} />
+                      <Buttons title={"Hapus"} variant={'outlined'} onClick={() => handleClickOpenAlertDialog(book.code)} />
                       <span className="mx-2"></span>
-                      <Buttons title={"Edit"} variant={'contained'} onClick={() => handleEdit(book.id)} />
+                      <Buttons title={"Edit"} variant={'contained'} onClick={() => handleEdit(book.code)} />
                     </td>
                   </tr>
                 </tbody>

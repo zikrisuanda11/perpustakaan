@@ -2,13 +2,45 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Book;
+use App\Models\Loan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return inertia('Admin/Dashboard/index');
+        $books = Book::count();
+        $loans = Loan::orderBy('code', 'desc')->paginate(15);
+        $loans->load('user', 'book');
+
+        $returned = Loan::where('status', 'returned')->count();
+        $borrowed = Loan::where('status', 'borrowed')->count();
+
+        return inertia('Admin/Dashboard/index', [
+            'total_books' => $books,
+            'returned' => $returned,
+            'borrowed' => $borrowed,
+            'loans' => $loans
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $books = Book::count();
+        $loans = Loan::where('status', $request->status == 'all' ? '!=' : $request->status, 'all')->orderBy('code', 'desc')->paginate(15);
+        $loans->load('user', 'book');
+
+        $returned = Loan::where('status', 'returned')->count();
+        $borrowed = Loan::where('status', 'borrowed')->count();
+
+        return inertia('Admin/Dashboard/index', [
+            'total_books' => $books,
+            'returned' => $returned,
+            'borrowed' => $borrowed,
+            'loans' => $loans
+        ]);
     }
 }

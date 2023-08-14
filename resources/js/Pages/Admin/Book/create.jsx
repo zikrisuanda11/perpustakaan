@@ -8,6 +8,7 @@ import CreateEdit from "../../../Components/Book/CreateEdit";
 export default function create({ flash, types }) {
   
   const { data, setData, post, processing, errors } = useForm({
+    code: '',
     id_type: '',
     title: '',
     publisher: '',

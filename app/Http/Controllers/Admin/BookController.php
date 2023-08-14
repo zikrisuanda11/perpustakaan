@@ -42,6 +42,7 @@ class BookController extends Controller
     {
         // dd($request->all());
         $request->validate([
+            'code' => 'required|unique:books,code',
             'id_type' => 'required',
             'title' => 'required',
             'publisher' => 'required',
@@ -49,21 +50,40 @@ class BookController extends Controller
             'release_year' => 'required',
             'stock' => 'required',
             'location' => 'required',
-            'book_image' => 'required'
         ], [
-            'id_type.required' => 'Kolom Jenis harus diisi.',
-            'title.required' => 'Kolom Judul harus diisi.',
-            'publisher.required' => 'Kolom Penerbit harus diisi.',
-            'author.required' => 'Kolom Penulis harus diisi.',
-            'release_year.required' => 'Kolom Tahun Rilis harus diisi.',
-            'stock.required' => 'Kolom Stok harus diisi.',
-            'location.required' => 'Kolom Lokasi harus diisi.',
-            'book_image.required' => 'Kolom Gambar Buku harus diisi.'
+            'code.unique' => 'Kode buku telah digunakan',
+            'code.required' => 'Kode Buku harus diisi.',
+            'id_type.required' => 'Jenis harus diisi.',
+            'title.required' => 'Judul harus diisi.',
+            'publisher.required' => 'Penerbit harus diisi.',
+            'author.required' => 'Penulis harus diisi.',
+            'release_year.required' => 'Tahun Rilis harus diisi.',
+            'stock.required' => 'Stok harus diisi.',
+            'location.required' => 'Lokasi harus diisi.',
         ]);
 
-        $path = Storage::put('public/book_image', $request->file('book_image'));
-        $pathUrl = Storage::url($path);
+        if($request->file('book_image')){
+            $path = Storage::put('public/book_image', $request->file('book_image'));
+            $pathUrl = Storage::url($path);
+            Book::create([
+                'code' => $request->code,
+                'id_type' => $request->id_type,
+                'title' => $request->title,
+                'publisher' => $request->publisher,
+                'author'  => $request->author,
+                'release_year' => $request->release_year,
+                'stock' => $request->stock,
+                'location' => $request->location,
+                'book_image' => $pathUrl
+            ]);
+    
+            return redirect()->route('buku.index')->with('message', 'Berhasil menambahkan data buku');
+        }
+
+        // dd($request->code);
+        
         Book::create([
+            'code' => $request->code,
             'id_type' => $request->id_type,
             'title' => $request->title,
             'publisher' => $request->publisher,
@@ -71,23 +91,26 @@ class BookController extends Controller
             'release_year' => $request->release_year,
             'stock' => $request->stock,
             'location' => $request->location,
-            'book_image' => $pathUrl
         ]);
 
         return redirect()->route('buku.index')->with('message', 'Berhasil menambahkan data buku');
+
+
+
     }
 
     public function update(Request $request, $id)
     {
         // dd(gettype($request->book_image));
         $book = Book::find($id);
-        // dd($book);
+        // dd($request->all());
         if(gettype($request->book_image) === 'object'){
             if(File::exists(public_path($book->book_image))){
                 File::delete(public_path($book->book_image));
                 $path = Storage::put('public/book_image', $request->file('book_image'));
                 $pathUrl = Storage::url($path);
                 $book->update([
+                    'code' => $request->code,
                     'id_type' => $request->id_type,
                     'title' => $request->title,
                     'publisher' => $request->publisher,
@@ -101,6 +124,7 @@ class BookController extends Controller
             }
         }else{
             $book->update([
+                'code' => $request->code,
                 'id_type' => $request->id_type,
                 'title' => $request->title,
                 'publisher' => $request->publisher,

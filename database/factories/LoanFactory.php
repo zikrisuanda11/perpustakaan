@@ -23,8 +23,9 @@ class LoanFactory extends Factory
         //     $table->date('return_date');
         //     $table->enum('status', ['borrowed', 'returned']);
         return [
-            'id_borrower' => 3,
-            'id_book' => 1,
+            'code' => 'KDPJM' . fake()->randomNumber(3),
+            'id_borrower' => 2,
+            'code_book' => '001.254',
             'stock' => 1,
             'loan_date' => fake()->date(),
             'return_date' => fake()->date(),

@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->string('code')->primary();
+            // $table->string('code_type');
+            // $table->foreign('code_type')->references('code')->on('types');
             $table->foreignId('id_type')->constrained('types')->onDelete('cascade');
             $table->string('title');
             $table->string('publisher');
@@ -20,7 +23,7 @@ return new class extends Migration
             $table->date('release_year');
             $table->integer('stock');
             $table->string('location');
-            $table->string('book_image');
+            $table->string('book_image')->nullable();
             $table->timestamps();
         });
     }

@@ -12,9 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('loans', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->string('code')->primary();
             $table->foreignId('id_borrower')->constrained('users');
-            $table->foreignId('id_book')->constrained('books');
+            $table->string('code_book');
+            $table->foreign('code_book')->references('code')->on('books');
+            // $table->foreignId('id_book')->constrained('books');
             $table->integer('stock');
             $table->date('loan_date');
             $table->date('return_date');

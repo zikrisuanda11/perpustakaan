@@ -3,15 +3,20 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\LoanController;
 use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\User\InformationController;
+use App\Http\Controllers\User\MemberController as UserMemberController;
 use App\Http\Controllers\User\BookController as UserBookController;
+use App\Http\Controllers\User\LoanController as UserLoanController;
+use App\Http\Controllers\User\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +35,9 @@ use App\Http\Controllers\User\BookController as UserBookController;
 
 Route::get('/', [LandingController::class, 'index']);
 Route::get('/buku', [UserBookController::class, 'index']);
+Route::put('/buku', [UserBookController::class, 'update']);
+Route::get('/member', [UserMemberController::class, 'index']);
+Route::get('/informasi', [InformationController::class, 'index']);
 Route::post('/clear-flash', function (Request $request) {
   $request->session()->forget('message');
   $request->session()->forget('error');
@@ -44,14 +52,23 @@ Route::middleware('auth')->group(function () {
   Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 
   Route::middleware('role:anggota')->group(function () {
+    Route::post('/loan', [UserLoanController::class, 'store']);
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::put('/profile/{id}', [ProfileController::class, 'update']);
   });
 
   Route::middleware('role:admin')->group(function () {
     Route::prefix('admin')->group(function () {
+
+      Route::get('/pengaturan', [SettingController::class, 'index']);
+      Route::put('/pengaturan/{id}', [SettingController::class, 'update']);
+
       Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+      Route::put('dashboard', [DashboardController::class, 'update'])->name('admin.dashboard.update');
       Route::resource('buku', BookController::class)->except('update');
       Route::post('buku/{id}', [BookController::class, 'update']);
       Route::get('peminjaman', [LoanController::class, 'index']);
+      Route::put('peminjaman', [LoanController::class, 'update']);
       Route::put('peminjaman/returned/{id}', [LoanController::class, 'returned']);
       Route::put('peminjaman/accepted/{id}', [LoanController::class, 'accepted']);
       Route::resource('anggota', MemberController::class);

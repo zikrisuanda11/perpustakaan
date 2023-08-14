@@ -13,6 +13,7 @@ export default function index({ loans, flash }) {
 
   const [openAlertDialogReturned, setOpenAlertDialogReturned] = useState(false);
   const [openAlertDialogAccept, setOpenAlertDialogAccept] = useState(false);
+  const [search, setSearch] = useState();
   const [idLoan, setIdLoan] = useState();
 
   const handleClickOpenAlertDialogAccept = (id) => {
@@ -40,12 +41,11 @@ export default function index({ loans, flash }) {
     }
   }, [flash.message])
 
-  // const handleDelete = (id) => {
-  //   router.delete(`/admin/peminjaman/${id}`);
-  // }
 
-  const handleReturned = (id) => {
-    router.put(`/admin/peminjaman/returned/${id}`);
+  const handleReturned = (loan) => {
+    router.put(`/admin/peminjaman/returned/${loan.code}`, {
+      code_book: loan.book.code
+    });
   }
 
   const handleAccepted = (id) => {
@@ -56,24 +56,30 @@ export default function index({ loans, flash }) {
     router.get(`/admin/peminjaman`)
   }
 
+  useEffect(() => {
+    router.put('/admin/peminjaman', {
+      search: search
+    })
+  }, [search])
+
   return (
     <Default>
       <Toaster />
       <AlertDialog
-        title={"Yakin ingin meminjamkan buku?"}
-        description={"Pastikan buku yang dipinjamkan tersedia"}
+        title={"Yakin ingin mengembalikan peminjaman?"}
+        description={"Pastikan keadaan buku"}
         open={openAlertDialogReturned}
         handleCloseAlertDialog={handleCloseAlertDialog}
         buttonTitle="Kembali"
-        handleOnClick={() => {handleReturned(idLoan)}}
+        handleOnClick={() => { handleReturned(idLoan) }}
       />
       <AlertDialog
-        title={"Yakin ingin mengembalikan peminjaman?"}
-        description={"Pastikan keadaan buku"}
+        title={"Yakin ingin meminjamkan buku?"}
+        description={"Pastikan buku tersedia"}
         open={openAlertDialogAccept}
         handleCloseAlertDialog={handleCloseAlertDialog}
         buttonTitle="Terima"
-        handleOnClick={() => {handleAccepted(idLoan)}}
+        handleOnClick={() => { handleAccepted(idLoan) }}
       />
       <div className="flex items-center justify-between">
         <div>
@@ -88,12 +94,19 @@ export default function index({ loans, flash }) {
             />
           </div>
         </div>
+        <div className="flex items-center gap-1 text-gray-500 w-3/12 py-3 px-5 mx-7 bg-slate-100 rounded-md">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          </svg>
+          <input onChange={(newValue) => setSearch(newValue.target.value)} type="text" placeholder="Search" className="focus:outline-none w-full bg-transparent  border-none appearance-none focus:border-none" />
+        </div>
       </div>
       <div className="mx-7 mt-5 border shadow-md rounded-xl p-5 flex flex-col gap-5 ">
         <table className="text-left text">
           <thead className="">
             <tr className="text-gray-500 border-b border-gray-100 uppercase">
-              <th className="py-3 px-2">Nama Peminjam</th>
+              <th className="py-3 px-2">Kode Peminjaman</th>
+              <th className="py-3">Nama Peminjam</th>
               <th className="py-3">Judul Buku</th>
               <th className="py-3">Tanggal Peminjaman</th>
               <th className="py-3">Tanggal Pengembalian</th>
@@ -110,9 +123,10 @@ export default function index({ loans, flash }) {
           )}
           {loans.data.map((loan) => {
             return (
-              <tbody className=" table-auto" key={loan.id} >
+              <tbody className=" table-auto" key={loan.code} >
                 <tr className="text-gray-500 border-b border-gray-100">
-                  <td className="py-3 px-2">{loan.user.name}</td>
+                  <td className="py-3 px-2">{loan.code}</td>
+                  <td className="py-3">{loan.user.name}</td>
                   <td className="py-3">{loan.book.title}</td>
                   <td className="py-3">{loan.loan_date}</td>
                   <td className="py-3">{loan.return_date}</td>
@@ -122,9 +136,9 @@ export default function index({ loans, flash }) {
                         status={loan.status}
                       /> */}
                     {loan.status == 'pending' ? (
-                      <Buttons title={"Terima"} variant={'outlined'} onClick={() => handleClickOpenAlertDialogAccept(loan.id)} />
+                      <Buttons title={"Terima"} variant={'outlined'} onClick={() => handleClickOpenAlertDialogAccept(loan.code)} />
                     ) : loan.status == 'borrowed' ? (
-                      <Buttons title={"Kembali"} variant={'outlined'} onClick={() => handleClickOpenAlertDialogReturned(loan.id)} />
+                      <Buttons title={"Kembali"} variant={'outlined'} onClick={() => handleClickOpenAlertDialogReturned(loan)} />
                     ) : null}
                     <span className="mx-2"></span>
                   </td>

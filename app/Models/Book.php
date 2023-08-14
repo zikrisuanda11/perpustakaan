@@ -9,7 +9,25 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $primaryKey = 'code';
+
+    protected $fillable = [
+        'code',
+        'id_type',
+        'title',
+        'publisher',
+        'author',
+        'release_year',
+        'stock',
+        'location',
+        'book_image'
+    ];
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
+    // protected $guarded = ['code'];
 
     public function loans()
     {

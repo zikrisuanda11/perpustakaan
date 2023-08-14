@@ -9,6 +9,7 @@ export default function create({ flash, types, book }) {
   // console.log(book);
   
   const { data, setData, post, processing, errors } = useForm({
+    code: book.code,
     id_type: book.id_type,
     title: book.title,
     publisher: book.publisher,
@@ -36,7 +37,7 @@ export default function create({ flash, types, book }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    post(`/admin/buku/${book.id}`, data)
+    post(`/admin/buku/${book.code}`, data)
   }
 
   return (
