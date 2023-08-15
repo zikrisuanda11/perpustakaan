@@ -10,7 +10,8 @@ export default function create({flash, member}){
     name: member.name,
     email: member.email,
     address: member.address,
-    no_ktp: member.no_ktp,
+    division: member.division,
+    position: member.position,
     phone: member.phone,
     password: member.password,
   })

@@ -7,11 +7,13 @@ import { RadioGroup } from '@headlessui/react';
 import Success from "../../../Components/Badges/Success";
 import Warning from "../../../Components/Badges/Warning";
 import Error from "../../../Components/Badges/Error";
-import {BiBookBookmark} from 'react-icons/bi';
-import {MdBookmarkAdded, MdBookmarkRemove} from 'react-icons/md';
+import { BiBookBookmark } from 'react-icons/bi';
+import { MdBookmarkAdded, MdBookmarkRemove } from 'react-icons/md';
+import {FaUserFriends} from 'react-icons/fa';
 import { router } from "@inertiajs/react";
 
-export default function index({ loans, total_books, returned, borrowed }) {
+
+export default function index({ loans, total_books, returned, borrowed, member }) {
   console.log(returned);
   const [selected, setSelected] = useState('all')
 
@@ -52,6 +54,11 @@ export default function index({ loans, total_books, returned, borrowed }) {
           <div className='px-4 py-2 shadow-md border rounded-md w-4/12 gap-3 flex flex-col text-sm'>
             <div><MdBookmarkRemove size={28} /></div>
             <div className='font-bold text-xl'>{borrowed}</div>
+            <div>Total Peminjaman / Aug 2023</div>
+          </div>
+          <div className='px-4 py-2 shadow-md border rounded-md w-4/12 gap-3 flex flex-col text-sm'>
+            <div><FaUserFriends size={28} /></div>
+            <div className='font-bold text-xl'>{member}</div>
             <div>Total Peminjaman / Aug 2023</div>
           </div>
         </div>
@@ -97,10 +104,12 @@ export default function index({ loans, total_books, returned, borrowed }) {
             <table className="w-full text-left text">
               <thead className="">
                 <tr className="text-gray-500 border-b border-gray-100 uppercase">
-                  <th className="py-3 px-2">Nama Peminjam</th>
+                  <th className="py-3 px-2">Kode</th>
+                  <th className="py-3 px-2">Kode Buku</th>
+                  <th className="py-3">Nama</th>
                   <th className="py-3">Judul Buku</th>
-                  <th className="py-3">Tanggal Peminjaman</th>
-                  <th className="py-3">Tanggal Pengembalian</th>
+                  <th className="py-3">Peminjaman</th>
+                  <th className="py-3">Pengembalian</th>
                   <th className="py-3">Status</th>
                 </tr>
               </thead>
@@ -115,7 +124,9 @@ export default function index({ loans, total_books, returned, borrowed }) {
                 return (
                   <tbody className="table-auto" key={loan.code} >
                     <tr className="text-gray-500 border-b border-gray-100">
-                      <td className="py-3 px-2">{loan.user.name}</td>
+                      <td className="py-3 px-2">{loan.code}</td>
+                      <td className="py-3">{loan.code_book}</td>
+                      <td className="py-3">{loan.user.name}</td>
                       <td className="py-3">{loan.book.title}</td>
                       <td className="py-3">{loan.loan_date}</td>
                       <td className="py-3">{loan.return_date}</td>

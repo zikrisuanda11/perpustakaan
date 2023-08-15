@@ -19,7 +19,7 @@ export default function DatatableDialog({ data, open, handleClose, dialogTitle }
               return (
                 <tbody key={idx} className=''>
                   <tr className='border-b'>
-                    <td className='py-2 px-2'>{item.name}</td>
+                    <td className='py-2 px-2'>{String(item.code).padStart(3, '0')} {item.name}</td>
                     <td className='py-2 px-2 text-red-500'>
                       <Link as='button' href={`/admin/type/${item.id}`} method='delete'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

@@ -6,11 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function FormDialog({open, handleClose, handleTypeSubmit, setTypeValue, label, dialogTitle}) {
-  const handleTypeChange = (event) => {
-    setTypeValue(event.target.value);
-  };
-
+export default function FormDialog({open, handleClose, handleTypeSubmit, setCodeType, setNameType, dialogTitle}) {
+  
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -19,12 +16,22 @@ export default function FormDialog({open, handleClose, handleTypeSubmit, setType
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            label={label}
+            id="code"
+            label="Kode Jenis"
             type="text"
             fullWidth
             variant="standard"
-            onChange={handleTypeChange}
+            onChange={e => {setCodeType(e.target.value)}}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Nama Jenis"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={e => {setNameType(e.target.value)}}
           />
         </DialogContent>
         <DialogActions>

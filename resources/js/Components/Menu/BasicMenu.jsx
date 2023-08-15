@@ -71,7 +71,7 @@ export default function BasicMenu({ handleLogout }) {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <a href="/profile" className='flex items-center'>
+          <a href="/profile" className='flex w-full h-full items-center'>
             <Avatar /> Profile
           </a>
         </MenuItem>

@@ -10,7 +10,8 @@ export default function create({flash}){
     name: '',
     email: '',
     address: '',
-    no_ktp: '',
+    division: '',
+    position: '',
     phone: '',
     password: '',
   })

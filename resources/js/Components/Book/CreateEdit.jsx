@@ -1,22 +1,27 @@
-import React, { useState } from "react";
-import { router } from "@inertiajs/react";
+import React, { useEffect, useState } from "react";
+import { router, usePage } from "@inertiajs/react";
 import FormDialog from "../Dialog/FormDialog";
 import DatatableDialog from "../Dialog/DatatableDialog";
 import ComboBox from "../Combobox";
 import Buttons from "../Button";
 import DatetimePicker from "../DatetimePicker";
 import dayjs from "dayjs";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function CreateEdit({ handleSubmit, types, setData, book, data }) {
+  const {errors} = usePage().props
+
   const [openFormDialog, setOpenFormDialog] = useState(false);
   const [openDatatableDialog, setOpenDatatableDialog] = useState(false);
-  const [typeValue, setTypeValue] = useState();
+  const [nameType, setNameType] = useState();
+  const [codeType, setCodeType] = useState();
   const [preview, setPreview] = useState(null);
-  console.log(preview);
 
   let formattedTypes = types.map((type) => {
-    return { label: type.name, id: type.id }
+    return { label: String(type.code).padStart(3, '0') + ' ' + type.name, id: String(type.code).padStart(3, '0') }
   });
+  
+  console.log(data);
 
   const handleClickOpenFormDialog = () => {
     setOpenFormDialog(true);
@@ -33,9 +38,21 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
 
   const handleTypeSubmit = () => {
     router.post('/admin/type', {
-      name: typeValue
+      code: codeType,
+      name: nameType
     })
   }
+
+  useEffect(() => {
+    if(Object.keys(errors).length != 0){
+      Object.values(errors).forEach(errorMessage => {
+        toast.error(errorMessage);
+      });
+      router.visit('/clear-flash', {
+        method: 'post'
+      });
+    }
+  }, [Object.keys(errors).length != 0])
 
   const handleImageChange = (e) => {
 
@@ -59,7 +76,8 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
         open={openFormDialog}
         handleClose={handleClose}
         handleTypeSubmit={handleTypeSubmit}
-        setTypeValue={setTypeValue}
+        setNameType={setNameType}
+        setCodeType={setCodeType}
         label={'Jenis Buku'}
         dialogTitle={'Tambah Jenis Buku'}
       />
@@ -71,6 +89,7 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
         label={'Hapus Buku'}
         dialogTitle={'Hapus Jenis Buku'}
       />
+      <Toaster position="top-right"/>
       <form className="mx-3 p-5 flex gap-5" onSubmit={handleSubmit}>
         <div className="w-3/12 flex flex-col gap-5">
           <div className="p-5 border shadow-md rounded-xl flex flex-col gap-5">
@@ -90,7 +109,7 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
           </div>
           <div className="p-5 border shadow-md rounded-xl flex flex-col gap-5">
             <h1 className="text-xl font-medium">Jenis Buku <span className="text-red-500">*</span></h1>
-            <ComboBox types={formattedTypes} setValue={(e, newValue) => newValue ? setData('id_type', newValue.id) : null} />
+            <ComboBox types={formattedTypes} setValue={(e, newValue) => newValue ? setData('code_type', newValue.id) : null} />
             <div className="flex gap-1">
               <div className="">
                 <Buttons size={'small'} title={"Hapus"} variant={'outlined'} onClick={handleClickOpenDatatableDialog} />
@@ -138,6 +157,12 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
             <div className="flex flex-col gap-1 w-6/12">
               <label htmlFor="location">Lokasi <span className="text-red-500">*</span></label>
               <input value={data.location} onChange={e => { setData('location', e.target.value) }} id="location" type="text" placeholder="Lokasi" className="border border-gray-200 rounded-md px-4 py-2" />
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-1 w-6/12">
+              <label htmlFor="city">Kota <span className="text-red-500">*</span></label>
+              <input value={data.city} onChange={e => { setData('city', e.target.value) }} id="city" type="text" placeholder="Kota" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
           </div>
           <div className="flex gap-5 justify-end">

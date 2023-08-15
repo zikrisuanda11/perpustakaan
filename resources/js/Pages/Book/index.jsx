@@ -6,7 +6,7 @@ import DateDialog from "../../Components/Dialog/DateDialog";
 import toast, { Toaster } from 'react-hot-toast';
 
 
-// TODO buat paginationnya
+// TODO fix bug jika di next tetap pada jenis yang sama
 export default function Book({ books, types, flash }) {
   const [selected, setSelected] = useState();
   const [open, setOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function Book({ books, types, flash }) {
     code_book: '',
     return_date: '',
   })
-  console.log(data);
+  console.log(selected);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -30,10 +30,10 @@ export default function Book({ books, types, flash }) {
     setOpen(true)
     setData('code_book', code)
   }
-  
+
   useEffect(() => {
     router.put('/buku', {
-      id_type: selected
+      code_type: selected
     }, { preserveScroll: true })
   }, [selected])
 
@@ -56,7 +56,7 @@ export default function Book({ books, types, flash }) {
         method: 'post'
       });
     }
-    if(Object.keys(errors).length != 0){
+    if (Object.keys(errors).length != 0) {
       Object.values(errors).forEach(errorMessage => {
         toast.error(errorMessage);
       });
@@ -82,20 +82,23 @@ export default function Book({ books, types, flash }) {
           <aside className="flex flex-col gap-10 w-2/12">
             <div className="flex flex-col gap-2">
               <h3 className="px-2 font-bold">Jenis Buku</h3>
-              <button onClick={() => handleSelected(null)} className={`text-left px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500 ${selected == null ? 'bg-white rounded-md shadow-sm' : ''}`}>Semua</button>
+              <button onClick={() => handleSelected(null)} className={`text-gray-600 text-left px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500 ${selected == null ? 'bg-white rounded-md shadow-sm' : ''}`}>Semua</button>
               {types.map((type) => (
-                <button key={type.id} value={type.id} onClick={(value) => handleSelected(value.target.value)} className={`text-left px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500 ${selected == type.id ? 'bg-white rounded-md shadow-sm' : ''}`}>{type.name}</button>
+                <button key={type.code} value={String(type.code).padStart(3, '0')} onClick={(value) => handleSelected(value.target.value)} className={`text-gray-600 flex justify-between text-left px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500 ${selected == type.code ? 'bg-white rounded-md shadow-sm' : ''}`}>
+                  <p>{type.name.charAt(0).toUpperCase() + type.name.slice(1).toLowerCase()}</p>
+                  <p>{type.books_count}</p>
+                </button>
               ))}
             </div>
           </aside>
           <section className="w-10/12 flex flex-wrap gap-20">
             {books.data.map((book) => (
-              <div key={book.code} className="w-3/12 h-60 ml-6 rounded-md shadow-xl flex items-center justify-center bg-white relative pl-8">
+              <div key={book.code} className="w-3/12 h-fit mx-3 px-14 py-6 rounded-md shadow-xl flex items-center justify-center bg-white relative ">
                 <div className="w-6/12 absolute -left-16">
-                  <img src={book.book_image ? book.book_image : '/assets/image/background_login.jpeg' } className="h-48 w-fit shadow-md" />
+                  <img src={book.book_image ? book.book_image : '/assets/image/background_login.jpeg'} className="h-48 w-fit shadow-md" />
                 </div>
                 <div className="w-6/12 flex flex-col gap-2" >
-                  <h3 className="text-2xl">{book.title}</h3>
+                  <h3 className="text-md w-36">{book.title}</h3>
                   <p className="text-sm text-gray-500 ">By {book.author}</p>
                   <p className="text-sm text-gray-500">{book.location}</p>
                   <p className="text-sm text-gray-500 ">Tersisa {book.stock}</p>
@@ -112,6 +115,23 @@ export default function Book({ books, types, flash }) {
                 </div>
               </div>
             ))}
+            <div className="w-full flex justify-end gap-5 text-gray-500 px-16">
+              <div>{books.from} - {books.to} to {books.total}</div>
+              <div className="">
+                <a href={books.prev_page_url}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                  </svg>
+                </a>
+              </div>
+              <div>
+                <a href={books.next_page_url}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </section>
         </div>
       </div>

@@ -13,14 +13,15 @@ class Book extends Model
 
     protected $fillable = [
         'code',
-        'id_type',
+        'code_type',
         'title',
         'publisher',
         'author',
         'release_year',
         'stock',
         'location',
-        'book_image'
+        'book_image',
+        'city'
     ];
 
     protected $keyType = 'string';
@@ -36,6 +37,6 @@ class Book extends Model
 
     public function type()
     {
-        return $this->belongsTo(Type::class, 'id_type');
+        return $this->belongsTo(Type::class, 'code_type');
     }
 }

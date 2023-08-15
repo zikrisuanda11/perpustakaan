@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function () {
       Route::put('dashboard', [DashboardController::class, 'update'])->name('admin.dashboard.update');
       Route::resource('buku', BookController::class)->except('update');
       Route::post('buku/{id}', [BookController::class, 'update']);
+      Route::put('buku', [BookController::class, 'search']);
       Route::get('peminjaman', [LoanController::class, 'index']);
       Route::put('peminjaman', [LoanController::class, 'update']);
       Route::put('peminjaman/returned/{id}', [LoanController::class, 'returned']);

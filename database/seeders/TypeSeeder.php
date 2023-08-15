@@ -19,6 +19,18 @@ class TypeSeeder extends Seeder
         // Type::create([
         //     'name' => 'science'
         // ]);
-        Type::factory()->count(25)->create();
+        // Type::factory()->count(25)->create();
+        Type::create([
+            'code' => '001',
+            'name' => 'Novel'
+        ]);
+        Type::create([
+            'code' => '002',
+            'name' => 'Dongeng'
+        ]);
+        Type::create([
+            'code' => '003',
+            'name' => 'Teknologi'
+        ]);
     }
 }

@@ -10,11 +10,21 @@ class TypeController extends Controller
 {
     public function store(Request $request)
     {
+        $request->validate([
+            'code' => 'required|unique:types,code',
+            'name' => 'required'
+        ], [
+            'code.unique' => 'Kode sudah digunakan',
+            'code.required' => 'kode Jenis Wajib diisi',
+            'name.required' => 'Nama Jenis wajib diisi'
+        ]);
+
         $type = Type::where('name', $request->name)->first();
         if($type){
             session()->flash('error', 'Jenis sudah ditambahkan');
         }else{
             Type::create([
+                'code' => $request->code,
                 'name' => ucfirst($request->name)
             ]);
             session()->flash('message', 'Berhasil menambahkan jenis buku');

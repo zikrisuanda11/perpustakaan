@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MemberRequest;
-use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
@@ -28,82 +26,80 @@ class MemberController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'address' => 'required',
-            'no_ktp' => 'required',
-            'phone' => 'required',
+            'password' => 'required|min:8|max:18'
         ], [
             'name.required' => 'Kolom Nama harus diisi.',
             'email.unique' => 'Email sudah digunakan.',
             'email.required' => 'Kolom Email harus diisi.',
-            'address.required' => 'Kolom Alamat harus diisi.',
-            'no_ktp.required' => 'Kolom No KTP harus diisi.',
-            'phone.required' => 'Kolom No HP harus diisi.',
+            'password.required' => 'Kolom Password harus diisi',
+            'password.min' => 'Minimal 8 karakter',
+            'password.max' => 'Password melebihi 18 karakter'
         ]);
 
         $member = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'address' => $request->address,
-            'no_ktp' => $request->no_ktp,
+            'division' => $request->division,
+            'position' => $request->position,
             'phone' => $request->phone,
             'password' => $request->password,
         ]);
 
         $member->assignRole('anggota');
 
-        return redirect()->route('anggota.index');
+        return redirect()->route('anggota.index')->with('message', 'Berhasil menambahkan anggota');
     }
 
     public function edit($id)
     {
         $member = User::find($id);
-        return inertia('Admin/Member/edit',[
+        return inertia('Admin/Member/edit', [
             'member' => $member
         ]);
     }
 
     public function update(Request $request, $id)
     {
+        // dd($id);
         $request->validate([
             'name' => 'required',
-            'email' => 'required|unique:users,member',
+            'email' => 'required',
             'address' => 'required',
-            'no_ktp' => 'required',
             'phone' => 'required',
         ], [
             'name.required' => 'Kolom Nama harus diisi.',
-            'email.unique' => 'Email sudah digunakan.',
             'email.required' => 'Kolom Email harus diisi.',
             'address.required' => 'Kolom Alamat harus diisi.',
-            'no_ktp.required' => 'Kolom No KTP harus diisi.',
             'phone.required' => 'Kolom No HP harus diisi.',
         ]);
 
         $member = User::find($id);
 
-        if($request->password == null){
+        if ($request->password == null) {
             $member->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'address' => $request->address,
-                'no_ktp' => $request->no_ktp,
+                'division' => $request->division,
+                'position' => $request->position,
                 'phone' => $request->phone,
             ]);
 
             return redirect()->route('anggota.index')->with('message', 'Berhasil mengubah data');
-        }else{
+        } else {
             $member->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'address' => $request->address,
-                'no_ktp' => $request->no_ktp,
+                'division' => $request->division,
+                'position' => $request->position,
                 'phone' => $request->phone,
                 'password' => $request->password,
             ]);
-            
+
             return redirect()->route('anggota.index')->with('message', 'Berhasil mengubah data');
         }
-        
     }
 
     public function destroy($id)

@@ -12,7 +12,8 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::paginate(15);
-        $types = Type::all();
+        $types = Type::withCount('books')->get();
+
         return inertia('Book/index', [
             'books' => $books,
             'types' => $types
@@ -21,25 +22,20 @@ class BookController extends Controller
 
     public function update(Request $request)
     {
-        // dd('ter');
+        // dd($request->code_type);
         $search = $request->search;
-        $books = Book::when($request->id_type, function ($query) use ($request) {
-            return $query->where('id_type', $request->id_type);
+        $books = Book::when($request->code_type, function ($query) use ($request) {
+            return $query->where('code_type', $request->code_type);
         })
         ->when($search, function ($query) use ($search) {
             return $query->where('title', 'like', "%{$search}%");
         })
-        ->when($request->id_type == null, function ($query){
+        ->when($request->code_type == null, function ($query){
             return $query;
         })
         ->paginate(15);
-        // dd($books);
-        // $books = Book::where('title', 'like', "%{$search}%")->paginate(15);
-        // $books = Book::where('id_type', $request->id_type)->paginate(15);
-        // if($request->id_type == null){
-        //     $books = Book::paginate(15);
-        // }
-        $types = Type::all();
+
+        $types = Type::withCount('books')->get();
         return inertia('Book/index', [
             'books' => $books,
             'types' => $types

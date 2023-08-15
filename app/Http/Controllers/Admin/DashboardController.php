@@ -7,6 +7,7 @@ use App\Models\Loan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -19,11 +20,14 @@ class DashboardController extends Controller
         $returned = Loan::where('status', 'returned')->count();
         $borrowed = Loan::where('status', 'borrowed')->count();
 
+        $member = User::role('anggota')->count();
+
         return inertia('Admin/Dashboard/index', [
             'total_books' => $books,
             'returned' => $returned,
             'borrowed' => $borrowed,
-            'loans' => $loans
+            'loans' => $loans,
+            'member' => $member
         ]);
     }
 

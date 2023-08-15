@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             // $table->id();
             $table->string('code')->primary();
-            // $table->string('code_type');
-            // $table->foreign('code_type')->references('code')->on('types');
-            $table->foreignId('id_type')->constrained('types')->onDelete('cascade');
+            $table->string('code_type');
+            $table->foreign('code_type')->references('code')->on('types')->onDelete('cascade');
+            // $table->foreignId('code_type')->constrained('types')->onDelete('cascade');
             $table->string('title');
             $table->string('publisher');
             $table->string('author');
             $table->date('release_year');
             $table->integer('stock');
-            $table->string('location');
+            $table->string('location')->nullable();
+            $table->string('city')->nullable();
             $table->string('book_image')->nullable();
             $table->timestamps();
         });

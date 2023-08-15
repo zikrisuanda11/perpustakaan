@@ -18,7 +18,8 @@ export default function Index({ loans, profile, flash }) {
     name: profile.name,
     email: profile.email,
     address: profile.address,
-    no_ktp: profile.no_ktp,
+    division: profile.division,
+    position: profile.position,
     phone: profile.phone,
   })
 
@@ -29,8 +30,8 @@ export default function Index({ loans, profile, flash }) {
   const navigations = [
     { name: 'Home', href: '/', active: url === '/', },
     { name: 'Buku', href: '/buku', active: url === '/buku', },
-    { name: 'Member', href: '/member', active: url === '/member', },
-    { name: 'Informasi', href: '/informasi', active: url === '/informasi', }
+    // { name: 'Member', href: '/member', active: url === '/member', },
+    // { name: 'Informasi', href: '/informasi', active: url === '/informasi', }
   ]
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function Index({ loans, profile, flash }) {
         method: 'post'
       });
     }
-    if(Object.keys(errors).length != 0){
+    if (Object.keys(errors).length != 0) {
       Object.values(errors).forEach(errorMessage => {
         toast.error(errorMessage);
       });
@@ -61,7 +62,9 @@ export default function Index({ loans, profile, flash }) {
       <Toaster position="top-right" />
       <div className="px-20 py-5 bg-[url('/public/assets/image/nav_bg.png')] bg-no-repeat bg-right-top shadow-md">
         <nav className="font-rubik flex justify-between">
-          <img src="/assets/Logo/logo.png" alt="" className="h-12 " />
+          <a href="/">
+            <img src="/assets/Logo/logo.png" alt="" className="h-12 " />
+          </a>
           <div className="flex gap-10 items-center">
             <div className="flex gap-10 text-white font-medium">
               {navigations.map((navigation, idx) => (
@@ -103,7 +106,7 @@ export default function Index({ loans, profile, flash }) {
           </div>
         </nav>
       </div >
-      <div className="h-fit flex justify-center mt-24 mb-36">
+      <div className="h-fit flex justify-center mt-24 mb-44">
         <div className="border shadow-md w-8/12">
           <BasicTabs
             handleSubmit={handleSubmit}

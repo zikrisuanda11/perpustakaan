@@ -10,7 +10,7 @@ export default function create({ flash, types, book }) {
   
   const { data, setData, post, processing, errors } = useForm({
     code: book.code,
-    id_type: book.id_type,
+    code_type: book.code_type,
     title: book.title,
     publisher: book.publisher,
     author: book.author,
@@ -18,6 +18,7 @@ export default function create({ flash, types, book }) {
     stock: book.stock,
     location: book.location,
     book_image: book.book_image,
+    city: book.city
   })
 
   useEffect(() => {

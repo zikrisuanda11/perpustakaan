@@ -94,7 +94,7 @@ export default function index({ loans, flash }) {
             />
           </div>
         </div>
-        <div className="flex items-center gap-1 text-gray-500 w-3/12 py-3 px-5 mx-7 bg-slate-100 rounded-md">
+        <div className="flex items-center gap-1 text-gray-500 w-3/12 py-2 px-5 mx-7 bg-slate-100 rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
           </svg>
@@ -105,11 +105,12 @@ export default function index({ loans, flash }) {
         <table className="text-left text">
           <thead className="">
             <tr className="text-gray-500 border-b border-gray-100 uppercase">
-              <th className="py-3 px-2">Kode Peminjaman</th>
-              <th className="py-3">Nama Peminjam</th>
+              <th className="py-3 px-2">Kode</th>
+              <th className="py-3 px-2">Kode Buku</th>
+              <th className="py-3">Nama</th>
               <th className="py-3">Judul Buku</th>
-              <th className="py-3">Tanggal Peminjaman</th>
-              <th className="py-3">Tanggal Pengembalian</th>
+              <th className="py-3">Peminjaman</th>
+              <th className="py-3">Pengembalian</th>
               <th className="py-3">Status</th>
               <th className="py-3 text-center">Aksi</th>
             </tr>
@@ -122,10 +123,12 @@ export default function index({ loans, flash }) {
             </tbody>
           )}
           {loans.data.map((loan) => {
+            console.log(loans);
             return (
               <tbody className=" table-auto" key={loan.code} >
                 <tr className="text-gray-500 border-b border-gray-100">
                   <td className="py-3 px-2">{loan.code}</td>
+                  <td className="py-3">{loan.code_book}</td>
                   <td className="py-3">{loan.user.name}</td>
                   <td className="py-3">{loan.book.title}</td>
                   <td className="py-3">{loan.loan_date}</td>

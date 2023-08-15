@@ -9,7 +9,7 @@ export default function create({ flash, types }) {
   
   const { data, setData, post, processing, errors } = useForm({
     code: '',
-    id_type: '',
+    code_type: '',
     title: '',
     publisher: '',
     author: '',
@@ -18,6 +18,7 @@ export default function create({ flash, types }) {
     location: '',
     book_image: '',
   })
+  console.log(data);
 
   useEffect(() => {
     if (flash.message) {

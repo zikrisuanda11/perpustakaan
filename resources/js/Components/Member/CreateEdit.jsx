@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import TooltipBasic from "../Tooltip";
 
 export default function CreateEdit({ handleSubmit, setData, member, data }) {
+  // console.log(data);
 
   return (
     <div>
@@ -41,18 +42,25 @@ export default function CreateEdit({ handleSubmit, setData, member, data }) {
               <input value={data.name} onChange={e => { setData('name', e.target.value) }} id="name" type="text" placeholder="Nama" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
             <div className="flex flex-col gap-1 w-6/12">
-              <label htmlFor="no_ktp">No KTP <span className="text-red-500">*</span></label>
-              <input value={data.no_ktp} onChange={e => { setData('no_ktp', e.target.value) }} id="no_ktp" type="number" placeholder="No KTP" className="border border-gray-200 rounded-md px-4 py-2" />
+              <label htmlFor="address">Alamat </label>
+              <input value={data.address} onChange={e => { setData('address', e.target.value) }} id="address" type="text" placeholder="Alamat" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
           </div>
           <div className="flex gap-5">
             <div className="flex flex-col gap-1 w-6/12">
-              <label htmlFor="phone">No HP <span className="text-red-500">*</span></label>
-              <input value={data.phone} onChange={e => { setData('phone', e.target.value) }} id="phone" type="number" placeholder="No HP" className="border border-gray-200 rounded-md px-4 py-2" />
+              <label htmlFor="division">Divisi</label>
+              {/* {console.log(data.division)} */}
+              <input value={data.division} onChange={e => { setData('division', e.target.value) }} id="division" type="text" placeholder="Divisi" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
             <div className="flex flex-col gap-1 w-6/12">
-              <label htmlFor="address">Alamat <span className="text-red-500">*</span></label>
-              <input value={data.address} onChange={e => { setData('address', e.target.value) }} id="address" type="text" placeholder="Alamat" className="border border-gray-200 rounded-md px-4 py-2" />
+              <label htmlFor="position">Jabatan </label>
+              <input value={data.position} onChange={e => { setData('position', e.target.value) }} id="position" type="text" placeholder="Jabatan" className="border border-gray-200 rounded-md px-4 py-2" />
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-1 w-6/12">
+              <label htmlFor="phone">No HP </label>
+              <input value={data.phone} onChange={e => { setData('phone', e.target.value) }} id="phone" type="number" placeholder="No HP" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
           </div>
           <div className="flex gap-5 justify-end">

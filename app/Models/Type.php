@@ -11,8 +11,10 @@ class Type extends Model
 
     protected $guarded = ['id'];
 
+    protected $primaryKey = 'code';
+
     public function books()
     {
-        return $this->hasMany(Book::class, 'id_type');
+        return $this->hasMany(Book::class, 'code_type');
     }
 }

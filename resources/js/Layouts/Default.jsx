@@ -41,7 +41,7 @@ export default function Default({ children }) {
         {/* Static sidebar for desktop */}
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
           <div className="flex-1 flex flex-col min-h-0 bg-gray-900">
-            <div className="flex items-center h-16 flex-shrink-0  bg-gray-800">
+            <div className="flex items-center h-16 flex-shrink-0  bg-gray-800 px-3">
               <img
                 className="h-10 w-auto text-white"
                 src="/assets/Logo/logo.png"

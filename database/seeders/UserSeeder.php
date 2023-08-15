@@ -18,7 +18,8 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'address' => fake()->address(),
-            'no_ktp' => fake()->randomNumber(9, true),
+            'division' => fake()->jobTitle(),
+            'position' => fake()->jobTitle(),
             'phone' => fake()->phoneNumber(),
             'password' => Hash::make('password')
         ]);
@@ -27,7 +28,8 @@ class UserSeeder extends Seeder
             'name' => 'anggota',
             'email' => 'anggota@gmail.com',
             'address' => fake()->address(),
-            'no_ktp' => fake()->randomNumber(9, true),
+            'division' => fake()->jobTitle(),
+            'position' => fake()->jobTitle(),
             'phone' => fake()->phoneNumber(),
             'password' => Hash::make('password')
         ]);

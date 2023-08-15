@@ -3,7 +3,7 @@ import { router, usePage } from "@inertiajs/react";
 
 export default function Hero() {
   const { url } = usePage();
-  
+
   const [search, setSearch] = useState();
   // console.log(search);
 
