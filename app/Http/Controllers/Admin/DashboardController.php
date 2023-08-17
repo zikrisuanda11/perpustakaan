@@ -40,11 +40,14 @@ class DashboardController extends Controller
         $returned = Loan::where('status', 'returned')->count();
         $borrowed = Loan::where('status', 'borrowed')->count();
 
+        $member = User::role('anggota')->count();
+
         return inertia('Admin/Dashboard/index', [
             'total_books' => $books,
             'returned' => $returned,
             'borrowed' => $borrowed,
-            'loans' => $loans
+            'loans' => $loans,
+            'member' => $member
         ]);
     }
 }

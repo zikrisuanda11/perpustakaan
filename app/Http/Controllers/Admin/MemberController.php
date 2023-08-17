@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class MemberController extends Controller
@@ -24,10 +25,12 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'id' => 'required',
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:8|max:18'
         ], [
+            'id.required' => 'Id harus diisi',
             'name.required' => 'Kolom Nama harus diisi.',
             'email.unique' => 'Email sudah digunakan.',
             'email.required' => 'Kolom Email harus diisi.',
@@ -37,6 +40,7 @@ class MemberController extends Controller
         ]);
 
         $member = User::create([
+            'id' => $request->id,
             'name' => $request->name,
             'email' => $request->email,
             'address' => $request->address,
@@ -61,13 +65,16 @@ class MemberController extends Controller
 
     public function update(Request $request, $id)
     {
+        // TODO update juga di sisi model_has_roles
         // dd($id);
         $request->validate([
+            'id' => 'required',
             'name' => 'required',
             'email' => 'required',
             'address' => 'required',
             'phone' => 'required',
         ], [
+            'id.required' => 'Id harus diisi',
             'name.required' => 'Kolom Nama harus diisi.',
             'email.required' => 'Kolom Email harus diisi.',
             'address.required' => 'Kolom Alamat harus diisi.',
@@ -77,7 +84,13 @@ class MemberController extends Controller
         $member = User::find($id);
 
         if ($request->password == null) {
+            DB::table('model_has_roles')->where('model_id', $member->id)
+                ->update([
+                    'model_id' => $request->id
+                ]);
+
             $member->update([
+                'id' => $request->id,
                 'name' => $request->name,
                 'email' => $request->email,
                 'address' => $request->address,
@@ -89,6 +102,7 @@ class MemberController extends Controller
             return redirect()->route('anggota.index')->with('message', 'Berhasil mengubah data');
         } else {
             $member->update([
+                'id' => $request->id,
                 'name' => $request->name,
                 'email' => $request->email,
                 'address' => $request->address,

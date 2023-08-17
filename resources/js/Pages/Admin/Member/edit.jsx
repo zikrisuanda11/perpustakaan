@@ -6,7 +6,9 @@ import CreateEdit from "../../../Components/Member/CreateEdit";
 import { router, useForm } from "@inertiajs/react";
 
 export default function create({flash, member}){
+  // console.log(member);
   const { data, setData, put, processing, errors } = useForm({
+    id: member.id,
     name: member.name,
     email: member.email,
     address: member.address,

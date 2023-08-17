@@ -37,7 +37,7 @@ export default function Landing({ books }) {
                       <div className="flex flex-col w-1/2 justify-center h-full gap-3">
                         <h3 className="text-2xl">{book.title}</h3>
                         <p className="text-xs text-gray-500 ">By {book.author}</p>
-                        <p className="font-rambla text-gray-500 text-sm">Novel '{book.title}' diterbitkan oleh {book.publisher} pada tahun {book.year}.</p>
+                        <p className="font-rambla text-gray-500 text-sm">Novel '{book.title}' diterbitkan oleh {book.publisher} pada tahun {book.release_year}.</p>
                       </div>
                     </div>
                   ))}

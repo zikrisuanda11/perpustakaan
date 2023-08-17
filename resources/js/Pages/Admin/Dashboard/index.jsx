@@ -49,17 +49,17 @@ export default function index({ loans, total_books, returned, borrowed, member }
           <div className='px-4 py-3 shadow-md border rounded-md w-4/12 gap-3 flex flex-col text-sm'>
             <div><MdBookmarkAdded size={28} /></div>
             <div className='font-bold text-xl'>{returned}</div>
-            <div>Total Pengembalian / Aug 2023</div>
+            <div>Total Pengembalian</div>
           </div>
           <div className='px-4 py-2 shadow-md border rounded-md w-4/12 gap-3 flex flex-col text-sm'>
             <div><MdBookmarkRemove size={28} /></div>
             <div className='font-bold text-xl'>{borrowed}</div>
-            <div>Total Peminjaman / Aug 2023</div>
+            <div>Total Peminjaman</div>
           </div>
           <div className='px-4 py-2 shadow-md border rounded-md w-4/12 gap-3 flex flex-col text-sm'>
             <div><FaUserFriends size={28} /></div>
             <div className='font-bold text-xl'>{member}</div>
-            <div>Total Peminjaman / Aug 2023</div>
+            <div>Total Anggota</div>
           </div>
         </div>
         <div className="">

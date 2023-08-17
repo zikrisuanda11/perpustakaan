@@ -10,10 +10,10 @@ class LandingController extends Controller
     public function index()
     {
         $book_recomendation = [
-            '015.046',
+            '015.046', //bulan
             '015.173',
-            '015.191',
-            '017.094',
+            '015.191', //konspirasi
+            '017.094', // gen z
             '016.096',
             '010.001'
         ];

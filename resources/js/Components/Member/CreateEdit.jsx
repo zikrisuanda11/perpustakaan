@@ -18,6 +18,16 @@ export default function CreateEdit({ handleSubmit, setData, member, data }) {
           <h1 className="text-xl font-medium">General</h1>
           <div className="flex gap-5">
             <div className="flex flex-col gap-1 w-6/12">
+              <label htmlFor="id">ID <span className="text-red-500">*</span></label>
+              <input value={data.id} onChange={e => { setData('id', e.target.value) }} id="id" type="text" placeholder="ID" className="border border-gray-200 rounded-md px-4 py-2" />
+            </div>
+            <div className="flex flex-col gap-1 w-6/12">
+              <label htmlFor="name">Nama <span className="text-red-500">*</span></label>
+              <input value={data.name} onChange={e => { setData('name', e.target.value) }} id="name" type="text" placeholder="Nama" className="border border-gray-200 rounded-md px-4 py-2" />
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-1 w-6/12">
               <label htmlFor="email">Email <span className="text-red-500">*</span></label>
               <input value={data.email} onChange={e => { setData('email', e.target.value) }} id="email" type="email" placeholder="Email" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
@@ -38,16 +48,6 @@ export default function CreateEdit({ handleSubmit, setData, member, data }) {
           </div>
           <div className="flex gap-5">
             <div className="flex flex-col gap-1 w-6/12">
-              <label htmlFor="name">Nama <span className="text-red-500">*</span></label>
-              <input value={data.name} onChange={e => { setData('name', e.target.value) }} id="name" type="text" placeholder="Nama" className="border border-gray-200 rounded-md px-4 py-2" />
-            </div>
-            <div className="flex flex-col gap-1 w-6/12">
-              <label htmlFor="address">Alamat </label>
-              <input value={data.address} onChange={e => { setData('address', e.target.value) }} id="address" type="text" placeholder="Alamat" className="border border-gray-200 rounded-md px-4 py-2" />
-            </div>
-          </div>
-          <div className="flex gap-5">
-            <div className="flex flex-col gap-1 w-6/12">
               <label htmlFor="division">Divisi</label>
               {/* {console.log(data.division)} */}
               <input value={data.division} onChange={e => { setData('division', e.target.value) }} id="division" type="text" placeholder="Divisi" className="border border-gray-200 rounded-md px-4 py-2" />
@@ -61,6 +61,10 @@ export default function CreateEdit({ handleSubmit, setData, member, data }) {
             <div className="flex flex-col gap-1 w-6/12">
               <label htmlFor="phone">No HP </label>
               <input value={data.phone} onChange={e => { setData('phone', e.target.value) }} id="phone" type="number" placeholder="No HP" className="border border-gray-200 rounded-md px-4 py-2" />
+            </div>
+            <div className="flex flex-col gap-1 w-6/12">
+              <label htmlFor="address">Alamat </label>
+              <input value={data.address} onChange={e => { setData('address', e.target.value) }} id="address" type="text" placeholder="Alamat" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
           </div>
           <div className="flex gap-5 justify-end">

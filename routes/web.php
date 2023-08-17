@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PdfController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\User\InformationController;
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function () {
 
   Route::middleware('role:admin')->group(function () {
     Route::prefix('admin')->group(function () {
+      Route::get('/cetak', [PdfController::class, 'index']);
 
       Route::get('/pengaturan', [SettingController::class, 'index']);
       Route::put('/pengaturan/{id}', [SettingController::class, 'update']);
