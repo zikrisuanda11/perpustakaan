@@ -5,16 +5,13 @@ import { router, useForm } from "@inertiajs/react";
 import DateDialog from "../../Components/Dialog/DateDialog";
 import toast, { Toaster } from 'react-hot-toast';
 
-
-// TODO fix bug jika di next tetap pada jenis yang sama
 export default function Book({ books, types, flash }) {
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   const { data, setData, post, processing, errors } = useForm({
     code_book: '',
     return_date: '',
   })
-  console.log(selected);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -32,16 +29,27 @@ export default function Book({ books, types, flash }) {
   }
 
   useEffect(() => {
-    router.put('/buku', {
-      code_type: selected
-    }, { preserveScroll: true })
+    router.get('/buku', {
+      type: selected
+    }, {
+      preserveState: true
+    })
   }, [selected])
+
+  // const handleType = (value) => {
+  //   router.get('/buku', {
+  //     type: value
+  //   }, {
+  //     // preserveScroll: true
+  //   })
+  //   // console.log('object');
+  // }
 
   const handleCloseDialog = () => {
     setOpen(false)
   }
 
-  // console.log(errors);
+  console.log(selected);
 
   useEffect(() => {
     if (flash.message) {
@@ -82,13 +90,16 @@ export default function Book({ books, types, flash }) {
           <aside className="flex flex-col gap-10 w-2/12">
             <div className="flex flex-col gap-2">
               <h3 className="px-2 font-bold">Jenis Buku</h3>
-              <button onClick={() => handleSelected(null)} className={`text-gray-600 text-left px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500 ${selected == null ? 'bg-white rounded-md shadow-sm' : ''}`}>Semua</button>
-              {types.map((type) => (
-                <button key={type.code} value={String(type.code).padStart(3, '0')} onClick={(value) => handleSelected(value.target.value)} className={`text-gray-600 flex justify-between text-left px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500 ${selected == type.code ? 'bg-white rounded-md shadow-sm' : ''}`}>
-                  <p>{type.name.charAt(0).toUpperCase() + type.name.slice(1).toLowerCase()}</p>
-                  <p>{type.books_count}</p>
-                </button>
-              ))}
+              <button onClick={() => router.get('/buku')} className={`text-gray-600 text-left px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500 ${selected == null ? 'bg-white rounded-md shadow-sm' : ''}`}>Semua</button>
+              {types.map((type) => {
+                // console.log(type);
+                return (
+                  <button key={type.code} onClick={() => setSelected(type.code)} className={`text-gray-600 text-sm flex justify-between items-center text-left px-2 py-1 hover:bg-white hover:rounded-md hover:shadow-sm hover:duration-500 ${selected == type.code ? 'bg-white rounded-md shadow-sm' : ''}`}>
+                    <p>{type.name.charAt(0).toUpperCase() + type.name.slice(1).toLowerCase()}</p>
+                    <p>{type.books_count}</p>
+                  </button>
+                )
+              })}
             </div>
           </aside>
           <section className="w-10/12 flex flex-wrap gap-20">

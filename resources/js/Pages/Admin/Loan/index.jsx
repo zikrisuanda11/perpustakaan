@@ -102,17 +102,17 @@ export default function index({ loans, flash }) {
         </div>
       </div>
       <div className="mx-7 mt-5 border shadow-md rounded-xl p-5 flex flex-col gap-5 ">
-        <table className="text-left text">
+        <table className="text-left table-fixed">
           <thead className="">
             <tr className="text-gray-500 border-b border-gray-100 uppercase">
               <th className="py-3 px-2">Kode</th>
-              <th className="py-3 px-2">Kode Buku</th>
-              <th className="py-3">Nama</th>
-              <th className="py-3">Judul Buku</th>
-              <th className="py-3">Peminjaman</th>
-              <th className="py-3">Pengembalian</th>
-              <th className="py-3">Status</th>
-              <th className="py-3 text-center">Aksi</th>
+              <th className="py-3 px-2 text-center">Kode Buku</th>
+              <th className="py-3 px-2 text-center">Nama</th>
+              <th className="py-3 px-2">Judul Buku</th>
+              <th className="py-3 px-2 text-center">Peminjaman</th>
+              <th className="py-3 px-2 text-center">Pengembalian</th>
+              <th className="py-3 px-2 text-center">Status</th>
+              <th className="py-3 px-2 text-center">Aksi</th>
             </tr>
           </thead>
           {loans.data == 0 && (
@@ -128,13 +128,13 @@ export default function index({ loans, flash }) {
               <tbody className=" table-auto" key={loan.code} >
                 <tr className="text-gray-500 border-b border-gray-100">
                   <td className="py-3 px-2">{loan.code}</td>
-                  <td className="py-3">{loan.code_book}</td>
-                  <td className="py-3">{loan.user.name}</td>
-                  <td className="py-3">{loan.book.title}</td>
-                  <td className="py-3">{loan.loan_date}</td>
-                  <td className="py-3">{loan.return_date}</td>
-                  <td className="py-3">{loan.status == 'returned' ? <Success title={'Kembali'} /> : loan.status == 'borrowed' ? <Warning title={'Dipinjam'} /> : <Error title={'Pending'} />}</td>
-                  <td className="py-3 justify-center flex">
+                  <td className="py-3 px-2 text-center">{loan.code_book}</td>
+                  <td className="py-3 px-2 text-center">{loan.user.name}</td>
+                  <td className="py-3 px-2">{loan.book.title}</td>
+                  <td className="py-3 px-2 text-center">{loan.loan_date}</td>
+                  <td className="py-3 px-2 text-center">{loan.return_date}</td>
+                  <td className="py-3 px-2 text-center">{loan.status == 'returned' ? <Success title={'Kembali'} /> : loan.status == 'borrowed' ? <Warning title={'Dipinjam'} /> : <Error title={'Pending'} />}</td>
+                  <td className="py-3 px-2 justify-center flex">
                     {/* <BasicMenu
                         status={loan.status}
                       /> */}

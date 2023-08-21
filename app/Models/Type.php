@@ -13,6 +13,10 @@ class Type extends Model
 
     protected $primaryKey = 'code';
 
+    protected $keyType = 'string'; // Ini jika code bertipe string
+
+    public $incrementing = false;
+
     public function books()
     {
         return $this->hasMany(Book::class, 'code_type');

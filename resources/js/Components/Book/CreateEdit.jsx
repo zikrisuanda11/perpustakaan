@@ -7,9 +7,10 @@ import Buttons from "../Button";
 import DatetimePicker from "../DatetimePicker";
 import dayjs from "dayjs";
 import toast, { Toaster } from 'react-hot-toast';
+import { BookSharp } from "@mui/icons-material";
 
 export default function CreateEdit({ handleSubmit, types, setData, book, data }) {
-  const {errors} = usePage().props
+  const { errors } = usePage().props
 
   const [openFormDialog, setOpenFormDialog] = useState(false);
   const [openDatatableDialog, setOpenDatatableDialog] = useState(false);
@@ -20,8 +21,6 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
   let formattedTypes = types.map((type) => {
     return { label: String(type.code).padStart(3, '0') + ' ' + type.name, id: String(type.code).padStart(3, '0') }
   });
-  
-  console.log(data);
 
   const handleClickOpenFormDialog = () => {
     setOpenFormDialog(true);
@@ -44,7 +43,7 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
   }
 
   useEffect(() => {
-    if(Object.keys(errors).length != 0){
+    if (Object.keys(errors).length != 0) {
       Object.values(errors).forEach(errorMessage => {
         toast.error(errorMessage);
       });
@@ -89,7 +88,7 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
         label={'Hapus Buku'}
         dialogTitle={'Hapus Jenis Buku'}
       />
-      <Toaster position="top-right"/>
+      <Toaster position="top-right" />
       <form className="mx-3 p-5 flex gap-5" onSubmit={handleSubmit}>
         <div className="w-3/12 flex flex-col gap-5">
           <div className="p-5 border shadow-md rounded-xl flex flex-col gap-5">
@@ -130,10 +129,17 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
         <div className="py-5 px-8 w-9/12 border shadow-md rounded-xl flex flex-col gap-5 h-fit">
           <h1 className="text-xl font-medium">General</h1>
           <div className="flex gap-5">
-            <div className="flex flex-col gap-1 w-6/12">
-              <label htmlFor="code">Kode Buku <span className="text-red-500">*</span></label>
-              <input value={data.code} onChange={e => { setData('code', e.target.value) }} id="code" type="text" placeholder="Kode Buku" className="border border-gray-200 rounded-md px-4 py-2" />
-            </div>
+            {book != undefined ? (
+              <div className="flex flex-col gap-1 w-6/12">
+                <label htmlFor="code">Kode Buku <span className="text-red-500">*</span></label>
+                <input disabled value={data.code} onChange={e => { setData('code', e.target.value) }} id="code" type="text" placeholder="Kode Buku" className="border border-gray-200 rounded-md px-4 py-2" />
+              </div>
+            ) : (
+              <div className="flex flex-col gap-1 w-6/12">
+                <label htmlFor="code">Kode Buku <span className="text-red-500">*</span></label>
+                <input value={data.code} onChange={e => { setData('code', e.target.value) }} id="code" type="text" placeholder="Kode Buku" className="border border-gray-200 rounded-md px-4 py-2" />
+              </div>
+            )}
             <div className="flex flex-col gap-1 w-6/12">
               <label htmlFor="title">Judul Buku <span className="text-red-500">*</span></label>
               <input value={data.title} onChange={e => { setData('title', e.target.value) }} id="title" type="text" placeholder="Judul Buku" className="border border-gray-200 rounded-md px-4 py-2" />

@@ -36,7 +36,7 @@ use App\Http\Controllers\User\ProfileController;
 
 Route::get('/', [LandingController::class, 'index']);
 Route::get('/buku', [UserBookController::class, 'index']);
-Route::put('/buku', [UserBookController::class, 'update']);
+// Route::put('/buku', [UserBookController::class, 'update']);
 Route::get('/member', [UserMemberController::class, 'index']);
 Route::get('/informasi', [InformationController::class, 'index']);
 Route::post('/clear-flash', function (Request $request) {
@@ -60,7 +60,8 @@ Route::middleware('auth')->group(function () {
 
   Route::middleware('role:admin')->group(function () {
     Route::prefix('admin')->group(function () {
-      Route::get('/cetak', [PdfController::class, 'index']);
+      Route::get('/cetak-peminjaman/{tanggal}', [PdfController::class, 'loan']);
+      Route::get('/cetak-buku/{tanggal}', [PdfController::class, 'book']);
 
       Route::get('/pengaturan', [SettingController::class, 'index']);
       Route::put('/pengaturan/{id}', [SettingController::class, 'update']);

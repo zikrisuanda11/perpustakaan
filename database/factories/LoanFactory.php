@@ -25,7 +25,7 @@ class LoanFactory extends Factory
         return [
             'code' => 'KDPJM' . fake()->randomNumber(3),
             'id_borrower' => 2,
-            'code_book' => '001.254',
+            'code_book' => '001.004',
             'stock' => 1,
             'loan_date' => fake()->date(),
             'return_date' => fake()->date(),

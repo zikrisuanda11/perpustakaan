@@ -11,7 +11,7 @@ class LoanController extends Controller
 {
     public function index()
     {
-        $loans = Loan::orderBy('code', 'desc')->paginate(15);
+        $loans = Loan::orderBy('created_at', 'desc')->paginate(15);
         $loans->load('user', 'book');
         return inertia('Admin/Loan/index', [
             'loans' => $loans
@@ -55,10 +55,13 @@ class LoanController extends Controller
                 })
                 ->orWhereHas('book', function ($bookQuery) use ($request) {
                     $bookQuery->where('title', 'like', "%{$request->search}%");
+                })
+                ->orWhereHas('book', function ($bookQuery) use ($request) {
+                    $bookQuery->where('code', 'like', "%{$request->search}%");
                 });
         }
 
-        $loans = $query->orderBy('code', 'desc')
+        $loans = $query->orderBy('created_at', 'desc')
             ->with('user', 'book')
             ->paginate(15);
 

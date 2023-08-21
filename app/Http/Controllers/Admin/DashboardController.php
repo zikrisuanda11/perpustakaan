@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Book;
 use App\Models\Loan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 

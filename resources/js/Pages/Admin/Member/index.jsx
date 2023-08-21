@@ -70,14 +70,14 @@ export default function index({ members, flash }) {
         <table className="text-left text">
           <thead className="">
             <tr className="text-gray-500 border-b border-gray-100 uppercase">
-              <th className="py-3">Id</th>
-              <th className="py-3 text-center">Nama</th>
-              <th className="py-3">Email</th>
-              <th className="py-3 truncate ...">Alamat</th>
-              <th className="py-3">Divisi</th>
-              <th className="py-3">Jabatan</th>
-              <th className="py-3">No HP</th>
-              <th className="py-3 text-center">Aksi</th>
+              <th className="py-3 px-3">Id</th>
+              <th className="py-3 px-3 text-center">Nama</th>
+              <th className="py-3 px-3">Email</th>
+              <th className="py-3 px-3 truncate ...">Alamat</th>
+              <th className="py-3 px-3">Divisi</th>
+              <th className="py-3 px-3">Jabatan</th>
+              <th className="py-3 px-3">No HP</th>
+              <th className="py-3 px-3 text-center">Aksi</th>
             </tr>
           </thead>
           {members.data == 0 && (
@@ -92,14 +92,14 @@ export default function index({ members, flash }) {
               return (
                 <tbody className=" table-auto" key={member.id} >
                   <tr className="text-gray-500 border-b border-gray-100">
-                    <td className="py-3">{member.id}</td>
-                    <td className="py-3 w-32 text-center ">{member.name}</td>
-                    <td className="py-3 w-56">{member.email}</td>
-                    <td className="py-3 w-56">{member.address}</td>
-                    <td className="py-3 w-56">{member.division}</td>
-                    <td className="py-3">{member.position}</td>
-                    <td className="py-3">{member.phone}</td>
-                    <td className="py-3 text-center">
+                    <td className="py-3 px-3">{member.id}</td>
+                    <td className="py-3 px-3 w-32 text-center ">{member.name}</td>
+                    <td className="py-3 px-3 w-56">{member.email}</td>
+                    <td className="py-3 px-3 w-56">{member.address}</td>
+                    <td className="py-3 px-3 w-56">{member.division}</td>
+                    <td className="py-3 px-3">{member.position}</td>
+                    <td className="py-3 px-3">{member.phone}</td>
+                    <td className="py-3 px-3 text-center">
                       {/* <Buttons title={"Hapus"} variant={'outlined'} onClick={() => handleClickOpenAlertDialog(member.id)} /> */}
                       <span className="mx-2"></span>
                       <Buttons title={"Edit"} variant={'contained'} onClick={() => handleEdit(member.id)} />

@@ -8,9 +8,11 @@ export default function Hero() {
   // console.log(search);
 
   useEffect(() => {
-    router.put('/buku', {
+    router.get('/buku', {
       search: search
-    }, { preserveScroll: true })
+    }, {
+      preserveState: true
+    })
   }, [search])
 
   return (
@@ -18,7 +20,7 @@ export default function Hero() {
       <div className="flex flex-col justify-center w-6/12 gap-5">
         <div className="text-8xl font-bold capitalize">Perpustakaan Damai</div>
         <div className="text-2xl font-discover">Temukan buku favorit anda disini dan baca dengan gratis</div>
-        {url === '/buku' ? (
+        {url != '/' ? (
           <div className="flex items-center gap-1 text-gray-500 w-10/12 py-3 px-5 bg-slate-100 rounded-md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />

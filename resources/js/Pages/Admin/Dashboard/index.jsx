@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Default from "../../../Layouts/Default";
 import Breadcrumbs from "../../../Components/Breadcrumbs";
-import { IoIosHome, IoIosWallet } from 'react-icons/io';
-import { FaStore } from 'react-icons/fa';
 import { RadioGroup } from '@headlessui/react';
 import Success from "../../../Components/Badges/Success";
 import Warning from "../../../Components/Badges/Warning";
@@ -11,11 +9,29 @@ import { BiBookBookmark } from 'react-icons/bi';
 import { MdBookmarkAdded, MdBookmarkRemove } from 'react-icons/md';
 import {FaUserFriends} from 'react-icons/fa';
 import { router } from "@inertiajs/react";
-
+import {BiPrinter} from 'react-icons/bi';
+import { Button } from "@mui/material";
+import MonthDailog from "../../../Components/Dialog/MonthDialog";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function index({ loans, total_books, returned, borrowed, member }) {
-  console.log(returned);
   const [selected, setSelected] = useState('all')
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState();
+
+  const handleCloseDialog = () => {
+    setOpen(false);
+  }
+
+  const handleSubmit = () => {
+    if(date == undefined){
+      toast.error('Silahkan pilih bulan')
+      setOpen(false)
+    }else{
+      window.open(`/admin/cetak-peminjaman/${date}`, '_blank')
+      setOpen(false)
+    }
+  }
 
   useEffect(() => {
     router.put('/admin/dashboard', {
@@ -25,6 +41,15 @@ export default function index({ loans, total_books, returned, borrowed, member }
 
   return (
     <Default>
+      <Toaster />
+      <MonthDailog
+        onChange={setDate}
+        buttonTitle="Cetak"
+        open={open}
+        handleCloseAlertDialog={handleCloseDialog}
+        handleOnClick={handleSubmit}
+        title={"Pilih Bulan"}
+      />
       <div className="flex items-center justify-between">
         <div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -65,7 +90,7 @@ export default function index({ loans, total_books, returned, borrowed, member }
         <div className="">
           <div className='mt-5 flex gap-5 items-center'>
             <div className='font-bold'>Status</div>
-            <div className='flex gap-5'>
+            <div className='flex gap-5 items-center'>
               <RadioGroup value={selected} onChange={setSelected}>
                 <div className='flex gap-5'>
                   <div>
@@ -98,6 +123,12 @@ export default function index({ loans, total_books, returned, borrowed, member }
                   </div>
                 </div>
               </RadioGroup>
+              <Button
+                variant="contained"
+                onClick={() => setOpen(true)}
+              >
+                <BiPrinter size={24}/>
+              </Button>
             </div>
           </div>
           <div className="mt-5 border shadow-md rounded-xl p-5 flex flex-col gap-5">

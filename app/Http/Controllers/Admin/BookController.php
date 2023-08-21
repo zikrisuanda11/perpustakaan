@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Book;
+use App\Models\Loan;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,8 +25,6 @@ class BookController extends Controller
 
     public function search(Request $request)
     {
-        // dd($request->search);
-        // $books = Book::paginate(15);
         $query = Book::query();
         if ($request->search) {
             $query->where('code', 'like', "%{$request->search}%")
@@ -35,12 +35,6 @@ class BookController extends Controller
                 ->orWhere('release_year', 'like', "%{$request->search}%")
                 ->orWhere('city', 'like', "%{$request->search}%")
                 ->orWhere('location', 'like', "%{$request->search}%");
-                // ->orWhereHas('user', function ($userQuery) use ($request) {
-                //     $userQuery->where('name', 'like', "%{$request->search}%");
-                // })
-                // ->orWhereHas('book', function ($bookQuery) use ($request) {
-                //     $bookQuery->where('title', 'like', "%{$request->search}%");
-                // });
         }
         $books = $query->paginate(15);
 
@@ -92,7 +86,7 @@ class BookController extends Controller
         ]);
 
         $format_year = Carbon::parse($request->release_year)->year;
-        if($request->file('book_image')){
+        if ($request->file('book_image')) {
             $path = Storage::put('public/book_image', $request->file('book_image'));
             $pathUrl = Storage::url($path);
             Book::create([
@@ -107,11 +101,10 @@ class BookController extends Controller
                 'book_image' => $pathUrl,
                 'city' => $request->city
             ]);
-    
+
             return redirect()->route('buku.index')->with('message', 'Berhasil menambahkan data buku');
         }
 
-        // dd($request->code);
         Book::create([
             'code' => $request->code,
             'code_type' => $request->code_type,
@@ -125,17 +118,16 @@ class BookController extends Controller
         ]);
 
         return redirect()->route('buku.index')->with('message', 'Berhasil menambahkan data buku');
-
-
-
     }
 
     public function update(Request $request, $id)
     {
+        // TODO buat validasi
         $format_year = Carbon::parse($request->release_year)->year;
         $book = Book::find($id);
-        if(gettype($request->book_image) === 'object'){
-            if(File::exists(public_path($book->book_image))){
+        
+        if (gettype($request->book_image) === 'object') {
+            if (File::exists(public_path($book->book_image))) {
                 File::delete(public_path($book->book_image));
                 $path = Storage::put('public/book_image', $request->file('book_image'));
                 $pathUrl = Storage::url($path);
@@ -151,9 +143,11 @@ class BookController extends Controller
                     'book_image' => $pathUrl,
                     'city' => $request->city
                 ]);
+
                 return redirect()->route('buku.index')->with('message', 'Berhasil update buku');
             }
-        }else{
+        } else {
+
             $book->update([
                 'code' => $request->code,
                 'code_type' => $request->code_type,
@@ -166,6 +160,7 @@ class BookController extends Controller
                 'book_image' => $request->book_image,
                 'city' => $request->city
             ]);
+
             return redirect()->route('buku.index')->with('message', 'Berhasil update buku');
         }
     }
