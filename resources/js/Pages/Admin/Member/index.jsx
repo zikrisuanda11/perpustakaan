@@ -10,12 +10,16 @@ import AlertDialog from "../../../Components/Dialog/AlertDialog";
 export default function index({ members, flash }) {
   const [openAlerDialog, setOpenAlertDialog] = useState(false);
   const [idMember, setIdMember] = useState();
+  const [search, setSearch] = useState();
   // console.log(idMember);
 
-  const handleClickOpenAlertDialog = (id) => {
-    setOpenAlertDialog(true);
-    setIdMember(id);
-  };
+  useEffect(() => {
+    router.get('/admin/anggota', {
+      search: search
+    }, {
+      preserveState: true
+    })
+  }, [search])
 
   const handleCloseAlertDialog = () => {
     setOpenAlertDialog(false);
@@ -62,8 +66,16 @@ export default function index({ members, flash }) {
             />
           </div>
         </div>
-        <div className="w-fit mx-7">
-          <Buttons title={"Tambah"} variant={'contained'} href={'/admin/anggota/create'} />
+        <div className="flex items-center gap-5 mx-7">
+          <div className="w-8/12 flex items-center gap-1 text-gray-500 py-2 px-5 bg-slate-100 rounded-md">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <input onChange={(newValue) => setSearch(newValue.target.value)} type="text" placeholder="Search" className="focus:outline-none w-full bg-transparent  border-none appearance-none focus:border-none" />
+          </div>
+          <div className="w-fit mx-7">
+            <Buttons title={"Tambah"} variant={'contained'} href={'/admin/anggota/create'} />
+          </div>
         </div>
       </div>
       <div className="mx-7 mt-5 border shadow-md rounded-xl p-5 flex flex-col gap-5 ">

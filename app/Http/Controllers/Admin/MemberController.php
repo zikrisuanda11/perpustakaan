@@ -9,9 +9,24 @@ use App\Http\Controllers\Controller;
 
 class MemberController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $members = User::role('anggota')->paginate();
+        $search = $request->query('search');
+        $query = User::query();
+        // $members = User::role('anggota')->paginate();
+
+        if ($search) {
+            $query->where('id', 'like', "%{$search}%")
+                ->orWhere('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('address', 'like', "%{$search}%")
+                ->orWhere('division', 'like', "%{$search}%")
+                ->orWhere('position', 'like', "%{$search}%")
+                ->orWhere('phone', 'like', "%{$search}%");
+        }
+
+        $members = $query->role('anggota')->paginate(15);
+
         return inertia('Admin/Member/index', [
             'members' => $members
         ]);

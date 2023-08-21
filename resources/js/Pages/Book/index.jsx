@@ -112,7 +112,7 @@ export default function Book({ books, types, flash }) {
                   <h3 className="text-md w-36">{book.title}</h3>
                   <p className="text-sm text-gray-500 ">By {book.author}</p>
                   <p className="text-sm text-gray-500">{book.location}</p>
-                  <p className="text-sm text-gray-500 ">Tersisa {book.stock}</p>
+                  <p className="text-sm text-gray-500 ">Tahun {book.release_year}</p>
                   <Button
                     variant="outlined"
                     size="small"

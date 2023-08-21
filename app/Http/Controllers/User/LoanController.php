@@ -28,8 +28,6 @@ class LoanController extends Controller
             ->count();
         $maxLoan = Setting::where('name', 'max_loans')->first();
 
-        // dd($maxLoan->value);
-
         if ($loanCheck >= $maxLoan->value) {
             return session()->flash('error', 'Sudah mencapai maksimal peminjaman');
         }

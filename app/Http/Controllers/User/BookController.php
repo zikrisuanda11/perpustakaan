@@ -22,8 +22,6 @@ class BookController extends Controller
             })
             ->paginate(15)
             ->withQueryString();
-            // dd($books);
-            // return response()->json($books);
         $types = Type::withCount('books')->get();
 
         // dd($types);
