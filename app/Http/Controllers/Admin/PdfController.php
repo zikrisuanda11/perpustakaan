@@ -47,4 +47,23 @@ class PdfController extends Controller
         $pdf->setPaper('A4', 'potrait');
         return $pdf->stream();
     }
+
+    public function member($tanggal)
+    {
+        $parts = explode('-', $tanggal);
+        $year = $parts[0];
+        $month = $parts[1];
+        $carbonTanggal = Carbon::createFromFormat('Y-m', $tanggal)->locale('id');
+        $formatTanggal = $carbonTanggal->translatedFormat('F Y');
+
+        $users = User::role('anggota')
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->limit(25)
+            ->get();
+
+        $pdf = Pdf::loadView('print-member', compact('users', 'formatTanggal'));
+        $pdf->setPaper('A4', 'potrait');
+        return $pdf->stream();
+    }
 }

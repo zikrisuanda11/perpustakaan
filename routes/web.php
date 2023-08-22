@@ -55,13 +55,14 @@ Route::middleware('auth')->group(function () {
   Route::get('/profile', [ProfileController::class, 'index']);
   Route::put('/profile/{id}', [ProfileController::class, 'update']);
 
-  Route::middleware('role:anggota')->group(function () {
-  });
+  // Route::middleware('role:anggota')->group(function () {
+  // });
 
   Route::middleware('role:admin')->group(function () {
     Route::prefix('admin')->group(function () {
       Route::get('/cetak-peminjaman/{tanggal}', [PdfController::class, 'loan']);
       Route::get('/cetak-buku/{tanggal}', [PdfController::class, 'book']);
+      Route::get('/cetak-anggota/{tanggal}', [PdfController::class, 'member']);
 
       Route::get('/pengaturan', [SettingController::class, 'index']);
       Route::put('/pengaturan/{id}', [SettingController::class, 'update']);
@@ -72,7 +73,8 @@ Route::middleware('auth')->group(function () {
       Route::post('buku/{id}', [BookController::class, 'update']);
       Route::put('buku', [BookController::class, 'search']);
       Route::get('peminjaman', [LoanController::class, 'index']);
-      Route::put('peminjaman', [LoanController::class, 'update']);
+      Route::put('/peminjaman', [LoanController::class, 'search']);
+      Route::put('peminjaman/{id}', [LoanController::class, 'update']);
       Route::put('peminjaman/returned/{id}', [LoanController::class, 'returned']);
       Route::put('peminjaman/accepted/{id}', [LoanController::class, 'accepted']);
       Route::resource('anggota', MemberController::class);

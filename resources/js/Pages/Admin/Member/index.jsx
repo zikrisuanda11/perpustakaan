@@ -6,18 +6,36 @@ import dayjs from "dayjs";
 import toast, { Toaster } from 'react-hot-toast';
 import { router } from "@inertiajs/react";
 import AlertDialog from "../../../Components/Dialog/AlertDialog";
+import { Button } from "@mui/material";
+import { BiPrinter } from 'react-icons/bi';
+import MonthDialog from "../../../Components/Dialog/MonthDialog";
 
 export default function index({ members, flash }) {
   const [openAlerDialog, setOpenAlertDialog] = useState(false);
   const [idMember, setIdMember] = useState();
   const [search, setSearch] = useState();
-  // console.log(idMember);
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState();
+
+  const handleCloseDialog = () => {
+    setOpen(false);
+  }
+  
+  const handleSubmit = () => {
+    if(date == undefined){
+      toast.error('Silahkan pilih bulan')
+      setOpen(false)
+    }else{
+      window.open(`/admin/cetak-anggota/${date}`, '_blank')
+      setOpen(false)
+    }
+  }
 
   useEffect(() => {
     router.get('/admin/anggota', {
       search: search
     }, {
-      preserveState: true
+      preserveState: true,
     })
   }, [search])
 
@@ -46,6 +64,14 @@ export default function index({ members, flash }) {
   return (
     <Default>
       <Toaster />
+      <MonthDialog
+        onChange={setDate}
+        buttonTitle="Cetak"
+        open={open}
+        handleCloseAlertDialog={handleCloseDialog}
+        handleOnClick={handleSubmit}
+        title={"Pilih Bulan"}
+      />
       <AlertDialog
         title={"Yakin ingin menghapus anggota?"}
         description={"Dengan menghapus data anggota data tidak dapat dikembalikan!"}
@@ -73,9 +99,15 @@ export default function index({ members, flash }) {
             </svg>
             <input onChange={(newValue) => setSearch(newValue.target.value)} type="text" placeholder="Search" className="focus:outline-none w-full bg-transparent  border-none appearance-none focus:border-none" />
           </div>
-          <div className="w-fit mx-7">
+          <div className="w-fit">
             <Buttons title={"Tambah"} variant={'contained'} href={'/admin/anggota/create'} />
           </div>
+          <Button
+            variant="contained"
+            onClick={() => setOpen(true)}
+          >
+            <BiPrinter size={24} />
+          </Button>
         </div>
       </div>
       <div className="mx-7 mt-5 border shadow-md rounded-xl p-5 flex flex-col gap-5 ">

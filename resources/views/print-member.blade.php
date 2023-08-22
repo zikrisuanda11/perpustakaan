@@ -49,7 +49,7 @@
 <body>
     <div>
         <div>
-            <h3>Rekap Data Buku</h3>
+            <h3>Rekap Data Anggota</h3>
             <h3>{{ $formatTanggal }}</h3>
             {{-- <table>
                 <tbody>
@@ -67,28 +67,26 @@
         <table class="report">
             <thead>
                 <tr>
-                    <th>Kode</th>
-                    <th>Kode Jenis</th>
-                    <th>Judul</th>
-                    <th>Penerbit</th>
-                    <th>Pengarang</th>
-                    <th>Lokasi</th>
-                    <th>Kota</th>
-                    <th>Tahun Rilis</th>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Alamat</th>
+                    <th>Divisi</th>
+                    <th>Jabatan</th>
+                    <th>No HP</th>
                 </tr>
             </thead>
             <tbody>
-                @if ($books->count() != 0)
-                    @foreach ($books as $book)
+                @if ($users->count() != 0)
+                    @foreach ($users as $user)
                         <tr>x
-                            <td>{{ $book->code }}</td>
-                            <td>{{ $book->type->code }}</td>
-                            <td>{{ $book->title }}</td>
-                            <td>{{ $book->author }}</td>
-                            <td>{{ $book->publisher }}</td>
-                            <td>{{ $book->location }}</td>
-                            <td>{{ $book->city }}</td>
-                            <td>{{ $book->release_year }}</td>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->address }}</td>
+                            <td>{{ $user->division }}</td>
+                            <td>{{ $user->position }}</td>
+                            <td>{{ $user->phone }}</td>
                         </tr>
                     @endforeach
                 @else

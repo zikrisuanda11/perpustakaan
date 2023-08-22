@@ -32,6 +32,8 @@
             padding-bottom: 5px;
             border: 1px solid #999;
             font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
         }
 
         .report {

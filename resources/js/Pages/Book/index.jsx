@@ -36,20 +36,9 @@ export default function Book({ books, types, flash }) {
     })
   }, [selected])
 
-  // const handleType = (value) => {
-  //   router.get('/buku', {
-  //     type: value
-  //   }, {
-  //     // preserveScroll: true
-  //   })
-  //   // console.log('object');
-  // }
-
   const handleCloseDialog = () => {
     setOpen(false)
   }
-
-  console.log(selected);
 
   useEffect(() => {
     if (flash.message) {

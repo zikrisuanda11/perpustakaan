@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('publisher');
             $table->string('author');
             $table->date('release_year');
-            $table->integer('stock');
+            // $table->integer('stock');
             $table->string('location')->nullable();
             $table->string('city')->nullable();
             $table->string('book_image')->nullable();

@@ -18,6 +18,7 @@ class BookController extends Controller
     {
         $books = Book::paginate(15);
 
+        $books->load('type');
         return inertia('Admin/Book/index', [
             'books' => $books,
         ]);
@@ -36,7 +37,7 @@ class BookController extends Controller
                 ->orWhere('city', 'like', "%{$request->search}%")
                 ->orWhere('location', 'like', "%{$request->search}%");
         }
-        $books = $query->paginate(15);
+        $books = $query->with('type')->paginate(15);
 
         return inertia('Admin/Book/index', [
             'books' => $books,
@@ -71,7 +72,7 @@ class BookController extends Controller
             'publisher' => 'required',
             'author' => 'required',
             'release_year' => 'required',
-            'stock' => 'required',
+            // 'stock' => 'required',
             'location' => 'required',
         ], [
             'code.unique' => 'Kode buku telah digunakan',
@@ -81,7 +82,7 @@ class BookController extends Controller
             'publisher.required' => 'Penerbit harus diisi.',
             'author.required' => 'Penulis harus diisi.',
             'release_year.required' => 'Tahun Rilis harus diisi.',
-            'stock.required' => 'Stok harus diisi.',
+            // 'stock.required' => 'Stok harus diisi.',
             'location.required' => 'Lokasi harus diisi.',
         ]);
 
@@ -96,7 +97,7 @@ class BookController extends Controller
                 'publisher' => $request->publisher,
                 'author'  => $request->author,
                 'release_year' => $format_year,
-                'stock' => $request->stock,
+                // 'stock' => $request->stock,
                 'location' => $request->location,
                 'book_image' => $pathUrl,
                 'city' => $request->city
@@ -112,7 +113,7 @@ class BookController extends Controller
             'publisher' => $request->publisher,
             'author'  => $request->author,
             'release_year' => $format_year,
-            'stock' => $request->stock,
+            // 'stock' => $request->stock,
             'location' => $request->location,
             'city' => $request->city
         ]);
@@ -138,7 +139,7 @@ class BookController extends Controller
                     'publisher' => $request->publisher,
                     'author'  => $request->author,
                     'release_year' => $format_year,
-                    'stock' => $request->stock,
+                    // 'stock' => $request->stock,
                     'location' => $request->location,
                     'book_image' => $pathUrl,
                     'city' => $request->city
@@ -155,7 +156,7 @@ class BookController extends Controller
                 'publisher' => $request->publisher,
                 'author'  => $request->author,
                 'release_year' => $format_year,
-                'stock' => $request->stock,
+                // 'stock' => $request->stock,
                 'location' => $request->location,
                 'book_image' => $request->book_image,
                 'city' => $request->city

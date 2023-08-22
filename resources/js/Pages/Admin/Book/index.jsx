@@ -8,7 +8,7 @@ import { router } from "@inertiajs/react";
 import AlertDialog from "../../../Components/Dialog/AlertDialog";
 import { Button } from "@mui/material";
 import { BiPrinter } from 'react-icons/bi';
-import MonthDailog from "../../../Components/Dialog/MonthDialog";
+import MonthDialog from "../../../Components/Dialog/MonthDialog";
 
 export default function index({ books, flash }) {
   const [openAlerDialog, setOpenAlertDialog] = useState(false);
@@ -16,7 +16,6 @@ export default function index({ books, flash }) {
   const [search, setSearch] = useState();
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState();
-  console.log(date);
 
   const handleCloseDialog = () => {
     setOpen(false);
@@ -68,7 +67,7 @@ export default function index({ books, flash }) {
 
   return (
     <Default>
-      <MonthDailog
+      <MonthDialog
         onChange={setDate}
         buttonTitle="Cetak"
         open={open}
@@ -127,7 +126,7 @@ export default function index({ books, flash }) {
                     <th className="py-3 px-2 text-center">Judul & sampul</th>
                     <th className="py-3 px-2">Penerbit</th>
                     <th className="py-3 px-2">Pengarang</th>
-                    <th className="py-3 px-2 text-center">Stok</th>
+                    <th className="py-3 px-2 text-center">Lokasi</th>
                     <th className="py-3 px-2 text-center">Kota</th>
                     <th className="py-3 px-2 text-center">Tahun Rilis</th>
                     <th className="py-3 px-2 text-center">Aksi</th>
@@ -146,8 +145,8 @@ export default function index({ books, flash }) {
                       <tbody key={book.code} >
                         <tr className="text-gray-500 border-gray-100">
                           <td className="py-3 px-2">{book.code}</td>
-                          <td className="py-3 px-2 text-center">{book.code_type}</td>
-                          <td className="py-3 px-2 flex items-center gap-5 w-56 overflow-auto">
+                          <td className="py-3 px-2 text-center">{book.code_type} {book.type.name}</td>
+                          <td className="py-3 px-2 flex flex-col text-center items-center gap-5 w-56 overflow-auto">
                             {book.book_image ? (
                               <img src={book.book_image} alt="" className="h-16 w-auto p-1 border shadow-md" />
                             ) : (
@@ -157,12 +156,12 @@ export default function index({ books, flash }) {
                           </td>
                           <td className="py-3 px-2 w-40">{book.publisher}</td>
                           <td className="py-3 px-2 w-40">{book.author}</td>
-                          <td className="py-3 px-2 text-center">{book.stock}</td>
+                          <td className="py-3 px-2 text-center">{book.location}</td>
                           <td className="py-3 px-2 text-center">{book.city}</td>
                           <td className="py-3 px-2 text-center">{dayjs(book.release_year).format('YYYY')}</td>
                           <td className="py-3 px-2 text-center">
                             <Buttons title={"Hapus"} variant={'outlined'} onClick={() => handleClickOpenAlertDialog(book.code)} />
-                            {/* <span className="mx-1"></span> */}
+                            <div className="m-2"></div>
 
                             <Buttons title={"Edit"} variant={'contained'} onClick={() => handleEdit(book.code)} />
                           </td>

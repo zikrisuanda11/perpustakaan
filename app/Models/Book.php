@@ -18,7 +18,7 @@ class Book extends Model
         'publisher',
         'author',
         'release_year',
-        'stock',
+        // 'stock',
         'location',
         'book_image',
         'city'

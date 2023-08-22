@@ -26,7 +26,7 @@ export default function DateDialog({ open, handleCloseAlertDialog, title, handle
         </DialogTitle>
         <DialogContent>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar 
+            <DateCalendar
               onChange={(newValue) => setData('return_date', dayjs(newValue).format('YYYY-MM-DD'))}
             />
           </LocalizationProvider>
