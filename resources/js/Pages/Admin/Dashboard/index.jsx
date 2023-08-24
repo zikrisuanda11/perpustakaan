@@ -13,11 +13,13 @@ import {BiPrinter} from 'react-icons/bi';
 import { Button } from "@mui/material";
 import MonthDailog from "../../../Components/Dialog/MonthDialog";
 import toast, { Toaster } from 'react-hot-toast';
+import dayjs from "dayjs";
 
 export default function index({ loans, total_books, returned, borrowed, member }) {
   const [selected, setSelected] = useState('all')
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(dayjs('2023-08').format('YYYY-MM'));
+  console.log(date);
 
   const handleCloseDialog = () => {
     setOpen(false);
@@ -43,6 +45,7 @@ export default function index({ loans, total_books, returned, borrowed, member }
     <Default>
       <Toaster />
       <MonthDailog
+        date={date}
         onChange={setDate}
         buttonTitle="Cetak"
         open={open}

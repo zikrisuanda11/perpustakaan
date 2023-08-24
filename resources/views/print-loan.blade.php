@@ -86,7 +86,17 @@
                             {{-- <td>{{$loan->book->title}}</td> --}}
                             <td>{{ $loan->loan_date }}</td>
                             <td>{{ $loan->return_date }}</td>
-                            <td>{{ $loan->status }}</td>
+                            <td>
+                                @if ($loan->status === 'pending')
+                                  Tertunda
+                                @elseif ($loan->status === 'returned')
+                                  Kembali
+                                @elseif ($loan->status === 'borrowed')
+                                  Dipinjam
+                                @else
+                                  <!-- Tambahkan pesan default atau handling jika status tidak sesuai -->
+                                @endif
+                              </td>
                         </tr>
                     @endforeach
                 @else

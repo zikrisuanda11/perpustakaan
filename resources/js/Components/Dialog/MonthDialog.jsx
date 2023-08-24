@@ -9,7 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
-export default function MonthDialog({ open, handleCloseAlertDialog, title, handleOnClick, buttonTitle = 'Hapus', onChange }) {
+export default function MonthDialog({ date, open, handleCloseAlertDialog, title, handleOnClick, buttonTitle = 'Hapus', onChange }) {
 
   return (
     <div>
@@ -27,6 +27,8 @@ export default function MonthDialog({ open, handleCloseAlertDialog, title, handl
         <DialogContent>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
+            // value={dayjs('2023-04')}
+              defaultValue={dayjs(date)}
               views={['month', 'year']}
               onChange={(newValue) => onChange(dayjs(newValue).format('YYYY-MM'))}
             />

@@ -82,7 +82,7 @@
                     @foreach ($books as $book)
                         <tr>x
                             <td>{{ $book->code }}</td>
-                            <td>{{ $book->type->code }}</td>
+                            <td>{{ $book->type->code }} {{$book->type->name}}</td>
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->author }}</td>
                             <td>{{ $book->publisher }}</td>
