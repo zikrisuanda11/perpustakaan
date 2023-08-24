@@ -26,7 +26,7 @@ class PdfController extends Controller
             ->get();
 
         $pdf = Pdf::loadView('print-loan', compact('loans', 'formatTanggal'));
-        $pdf->setPaper('A4', 'potrait');
+        $pdf->setPaper('A4', 'landscape');
         return $pdf->stream();
     }
 
@@ -44,7 +44,7 @@ class PdfController extends Controller
             ->get();
 
         $pdf = Pdf::loadView('print-book', compact('books', 'formatTanggal'));
-        $pdf->setPaper('A4', 'potrait');
+        $pdf->setPaper('A4', 'landscape');
         return $pdf->stream();
     }
 
@@ -63,7 +63,7 @@ class PdfController extends Controller
             ->get();
 
         $pdf = Pdf::loadView('print-member', compact('users', 'formatTanggal'));
-        $pdf->setPaper('A4', 'potrait');
+        $pdf->setPaper('A4', 'landscape');
         return $pdf->stream();
     }
 }
