@@ -16,7 +16,7 @@ export default function index({ books, flash }) {
   const [idBook, setIdBook] = useState();
   const [search, setSearch] = useState();
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState(dayjs('2023-08').format('YYYY-MM'));
+  const [date, setDate] = useState(dayjs(Date().now).format('YYYY-MM'));
   const [openNotif, setOpenNotif] = useState(false);
 
   const handleCloseNotif = () => {

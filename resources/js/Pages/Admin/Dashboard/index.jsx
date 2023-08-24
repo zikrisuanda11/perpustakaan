@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 export default function index({ loans, total_books, returned, borrowed, member }) {
   const [selected, setSelected] = useState('all')
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState(dayjs('2023-08').format('YYYY-MM'));
+  const [date, setDate] = useState(dayjs(Date().now).format('YYYY-MM'));
   console.log(date);
 
   const handleCloseDialog = () => {
