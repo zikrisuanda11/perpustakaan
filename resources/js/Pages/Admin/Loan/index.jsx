@@ -9,6 +9,7 @@ import Success from "../../../Components/Badges/Success";
 import Warning from "../../../Components/Badges/Warning";
 import Error from "../../../Components/Badges/Error";
 import DateDialog from "../../../Components/Dialog/DateDialog";
+import SuccessNotif from "../../../Components/Notification/Success";
 
 export default function index({ loans, flash }) {
 
@@ -17,9 +18,17 @@ export default function index({ loans, flash }) {
   const [openDateDialog, setOpenDateDialog] = useState(false);
   const [search, setSearch] = useState();
   const [idLoan, setIdLoan] = useState();
+  const [openNotif, setOpenNotif] = useState(false);
   const { data, setData, post, processing, errors } = useForm({
     return_date: '',
   })
+
+  const handleCloseNotif = () => {
+    setOpenNotif(false);
+    router.visit('/clear-flash', {
+      method: 'post'
+    });
+  }
 
   const handleClickOpenAlertDialogAccept = (id) => {
     setOpenAlertDialogAccept(true);
@@ -45,29 +54,42 @@ export default function index({ loans, flash }) {
     setOpenAlertDialogAccept(false);
   };
 
+  // useEffect(() => {
+  //   if (flash.message) {
+  //     toast.success(flash.message)
+  //     router.visit('/clear-flash', {
+  //       method: 'post'
+  //     });
+
+  //   }
+  // }, [flash.message])
   useEffect(() => {
     if (flash.message) {
-      toast.success(flash.message)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
-
+      setOpenNotif(true)
     }
   }, [flash.message])
-
 
   const handleReturned = (loan) => {
     router.put(`/admin/peminjaman/returned/${loan.code}`, {
       code_book: loan.book.code
     });
+    setOpenAlertDialogReturned(false);
+    setOpenAlertDialogAccept(false);
+    setOpenDateDialog(false);
   }
 
   const handleAccepted = (id) => {
     router.put(`/admin/peminjaman/accepted/${id}`);
+    setOpenAlertDialogReturned(false);
+    setOpenAlertDialogAccept(false);
+    setOpenDateDialog(false);
   }
 
   const handleSubmitDate = () => {
     router.put(`/admin/peminjaman/${idLoan}`, data)
+    setOpenAlertDialogReturned(false);
+    setOpenAlertDialogAccept(false);
+    setOpenDateDialog(false);
   }
 
   console.log(search);
@@ -82,7 +104,12 @@ export default function index({ loans, flash }) {
 
   return (
     <Default>
-      <Toaster />
+      <SuccessNotif
+        openModal={openNotif}
+        closeModal={handleCloseNotif}
+        message={flash.message}
+      />
+      {/* <Toaster /> */}
       <DateDialog
         open={openDateDialog}
         handleCloseAlertDialog={handleCloseDateDialog}

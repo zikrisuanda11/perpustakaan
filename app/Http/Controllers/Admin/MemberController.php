@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Loan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,12 +41,12 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required',
+            'id' => 'unique:users,id',
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:8|max:18'
         ], [
-            'id.required' => 'Id harus diisi',
+            'id.uniqued' => 'Id Sudah digunakan',
             'name.required' => 'Kolom Nama harus diisi.',
             'email.unique' => 'Email sudah digunakan.',
             'email.required' => 'Kolom Email harus diisi.',
@@ -80,8 +81,6 @@ class MemberController extends Controller
 
     public function update(Request $request, $id)
     {
-        // TODO update juga di sisi model_has_roles
-        // dd($id);
         $request->validate([
             'id' => 'required',
             'name' => 'required',
@@ -99,6 +98,13 @@ class MemberController extends Controller
         $member = User::find($id);
 
         if ($request->password == null) {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+            Loan::where('id_borrower', $member->id)
+                ->update([
+                    'id_borrower' => $request->id
+                ]);
+
             DB::table('model_has_roles')->where('model_id', $member->id)
                 ->update([
                     'model_id' => $request->id
@@ -113,9 +119,22 @@ class MemberController extends Controller
                 'position' => $request->position,
                 'phone' => $request->phone,
             ]);
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
             return redirect()->route('anggota.index')->with('message', 'Berhasil mengubah data');
         } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+            Loan::where('id_borrower', $member->id)
+                ->update([
+                    'id_borrower' => $request->id
+                ]);
+
+            DB::table('model_has_roles')->where('model_id', $member->id)
+                ->update([
+                    'model_id' => $request->id
+                ]);
+
             $member->update([
                 'id' => $request->id,
                 'name' => $request->name,
@@ -126,6 +145,7 @@ class MemberController extends Controller
                 'phone' => $request->phone,
                 'password' => $request->password,
             ]);
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
             return redirect()->route('anggota.index')->with('message', 'Berhasil mengubah data');
         }

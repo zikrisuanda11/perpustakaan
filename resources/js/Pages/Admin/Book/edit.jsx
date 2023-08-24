@@ -4,9 +4,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import { router, useForm } from "@inertiajs/react";
 import Breadcrumbs from "../../../Components/Breadcrumbs";
 import CreateEdit from "../../../Components/Book/CreateEdit";
+import Success from "../../../Components/Notification/Success";
 
 export default function create({ flash, types, book }) {
-  // console.log(book);
+  const [openNotif, setOpenNotif] = useState(false);
   
   const { data, setData, post, processing, errors } = useForm({
     code: book.code,
@@ -21,12 +22,16 @@ export default function create({ flash, types, book }) {
     city: book.city
   })
 
+  const handleCloseNotif = () => {
+    setOpenNotif(false);
+    router.visit('/clear-flash', {
+      method: 'post'
+    });
+  }
+
   useEffect(() => {
     if (flash.message) {
-      toast.success(flash.message)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
+      setOpenNotif(true)
     }
     if (flash.error) {
       toast.error(flash.error)
@@ -34,7 +39,15 @@ export default function create({ flash, types, book }) {
         method: 'post'
       });
     }
-  }, [flash.message, flash.error])
+    if(Object.keys(errors).length != 0){
+      Object.values(errors).forEach(errorMessage => {
+        toast.error(errorMessage);
+      });
+      router.visit('/clear-flash', {
+        method: 'post'
+      });
+    }
+  }, [flash.message, flash.error, Object.keys(errors).length != 0])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -43,7 +56,12 @@ export default function create({ flash, types, book }) {
 
   return (
     <Default>
-      <Toaster />
+      <Success
+        openModal={openNotif}
+        closeModal={handleCloseNotif}
+        message={flash.message}
+      />
+      <Toaster position="top-right"/>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <h1 className="text-2xl font-semibold text-gray-900">Buku</h1>
       </div>

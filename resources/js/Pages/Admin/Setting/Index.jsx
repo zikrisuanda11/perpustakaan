@@ -4,14 +4,21 @@ import Breadcrumbs from "../../../Components/Breadcrumbs";
 import Buttons from "../../../Components/Button";
 import { router, useForm } from "@inertiajs/react";
 import toast, { Toaster } from 'react-hot-toast';
+import Success from "../../../Components/Notification/Success";
 
 export default function Index({ settings, flash}) {
   const [id, setId] = useState();
+  const [openNotif, setOpenNotif] = useState(false);
   const { data, setData, put, processing, errors } = useForm({
     value: ''
   });
 
-  console.log(id);
+  const handleCloseNotif = () => {
+    setOpenNotif(false);
+    router.visit('/clear-flash', {
+      method: 'post'
+    });
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -19,19 +26,28 @@ export default function Index({ settings, flash}) {
     // router.put(`/pengaturan/${id}`, data)
   }
 
+  // useEffect(() => {
+  //   if (flash.message) {
+  //     toast.success(flash.message)
+  //     router.visit('/clear-flash', {
+  //       method: 'post'
+  //     });
+  //   }
+  // }, [flash.message])
   useEffect(() => {
     if (flash.message) {
-      toast.success(flash.message)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
+      setOpenNotif(true)
     }
   }, [flash.message])
 
   console.log(data);
   return (
     <Default>
-      <Toaster position="top-right"/>
+      <Success
+        openModal={openNotif}
+        closeModal={handleCloseNotif}
+        message={flash.message}
+      />
       <div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <h1 className="text-2xl font-semibold text-gray-900">Setting</h1>

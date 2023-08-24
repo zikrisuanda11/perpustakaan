@@ -55,4 +55,12 @@ class LoanController extends Controller
 
         return session()->flash('message', 'Berhasil meminjam buku');
     }
+
+    public function destroy($id)
+    {
+        $loan = Loan::where('code', $id);   
+        $loan->delete();
+
+        return session()->flash('message', 'Berhasil membatakan peminjaman');
+    }
 }

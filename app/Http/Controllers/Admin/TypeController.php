@@ -23,9 +23,10 @@ class TypeController extends Controller
         if($type){
             session()->flash('error', 'Jenis sudah ditambahkan');
         }else{
+            // dd($request->code, $request->name);
             Type::create([
                 'code' => $request->code,
-                'name' => ucfirst($request->name)
+                'name' => strtoupper($request->name)
             ]);
             session()->flash('message', 'Berhasil menambahkan jenis buku');
         }
@@ -33,6 +34,7 @@ class TypeController extends Controller
 
     public function destroy($id)
     {
+        // dd($id);
         $type = Type::find($id);
         if(!$type){
             session()->flash('error', 'Jenis buku tidak di temukan');

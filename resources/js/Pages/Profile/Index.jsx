@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../Components/Footer/Footer";
 import { router, useForm, usePage } from "@inertiajs/react";
 import { Avatar } from "@mui/material";
@@ -6,12 +6,21 @@ import BasicMenu from "../../Components/Menu/BasicMenu";
 import Button from '@mui/material-next/Button';
 import BasicTabs from '../../Components/Tabs/BasicTab';
 import toast, { Toaster } from 'react-hot-toast';
+import Success from "../../Components/Notification/Success";
 
 export default function Index({ loans, profile, flash }) {
+  const [openNotif, setOpenNotif] = useState(false);
   const { url } = usePage();
   const { auth } = usePage().props;
   const handleLogout = () => {
     router.post('/logout');
+  }
+
+  const handleCloseNotif = () => {
+    setOpenNotif(false);
+    router.visit('/clear-flash', {
+      method: 'post'
+    });
   }
 
   const { data, setData, put, processing, errors } = useForm({
@@ -34,32 +43,21 @@ export default function Index({ loans, profile, flash }) {
     // { name: 'Informasi', href: '/informasi', active: url === '/informasi', }
   ]
 
+  console.log(flash.message);
   useEffect(() => {
     if (flash.message) {
-      toast.success(flash.message)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
+      setOpenNotif(true)
     }
-    if (flash.error) {
-      toast.error(flash.error)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
-    }
-    if (Object.keys(errors).length != 0) {
-      Object.values(errors).forEach(errorMessage => {
-        toast.error(errorMessage);
-      });
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
-    }
-  }, [flash.message, flash.error, Object.keys(errors).length != 0])
+  }, [flash.message])
 
   return (
     <>
-      <Toaster position="top-right" />
+      <Success
+        openModal={openNotif}
+        closeModal={handleCloseNotif}
+        message={flash.message}
+      />
+      {/* <Toaster position="top-right" /> */}
       <div className="px-20 py-5 bg-[url('/public/assets/image/nav_bg.png')] bg-no-repeat bg-right-top shadow-md">
         <nav className="font-rubik flex justify-between">
           <a href="/">

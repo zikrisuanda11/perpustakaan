@@ -8,6 +8,8 @@ import Success from '../Badges/Success';
 import Warning from '../Badges/Warning';
 import Error from '../Badges/Error';
 import Buttons from "../Button";
+import { Button } from '@mui/material';
+import { router } from '@inertiajs/react';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,12 +45,15 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs({ profile, loans, data, setData, handleSubmit }) {
-  // console.log(loans);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const handleDelete = (code) => {
+    router.delete(`/loan/${code}`);
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -63,10 +68,11 @@ export default function BasicTabs({ profile, loans, data, setData, handleSubmit 
           <thead className="">
             <tr className="text-gray-500 border-b border-gray-100 uppercase">
               <th className="py-3 px-2">Kode</th>
-              <th className="py-3">Judul Buku</th>
+              <th className="py-3 w-56">Judul Buku</th>
               <th className="py-3">Peminjaman</th>
               <th className="py-3">Pengembalian</th>
               <th className="py-3">Status</th>
+              <th className="py-3 text-center">Aksi</th>
             </tr>
           </thead>
           {loans.data == 0 && (
@@ -81,10 +87,15 @@ export default function BasicTabs({ profile, loans, data, setData, handleSubmit 
               <tbody className="table-auto" key={loan.code} >
                 <tr className="text-gray-500 border-b border-gray-100">
                   <td className="py-3 px-2">{loan.code}</td>
-                  <td className="py-3">{loan.book.title}</td>
+                  <td className="py-3 w-56">{loan.book.title}</td>
                   <td className="py-3">{loan.loan_date}</td>
                   <td className="py-3">{loan.return_date}</td>
                   <td className="py-3">{loan.status == 'returned' ? <Success title={'Kembali'} /> : loan.status == 'borrowed' ? <Warning title={'Dipinjam'} /> : <Error title={'Tertunda'} />}</td>
+                  <td className="py-3 text-center">
+                    {loan.status === 'pending' ? (
+                      <Button onClick={() => handleDelete(loan.code)} variant="outlined" color="error">Batalkan</Button>
+                    ): null}
+                  </td>
                 </tr>
               </tbody>
             )
@@ -123,11 +134,11 @@ export default function BasicTabs({ profile, loans, data, setData, handleSubmit 
           <div className='flex gap-5'>
             <div className='flex flex-col w-1/2'>
               <label htmlFor="division">Divisi <span className="text-red-500">*</span></label>
-              <input onChange={e => { setData('division', e.target.value) }} value={data.division} id="division" type="text" placeholder="No HP" className="border border-gray-200 rounded-md px-4 py-2" />
+              <input onChange={e => { setData('division', e.target.value) }} value={data.division} id="division" type="text" placeholder="Divisi" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
             <div className='flex flex-col w-1/2'>
               <label htmlFor="position">Jabatan <span className="text-red-500">*</span></label>
-              <input onChange={e => { setData('position', e.target.value) }} value={data.position} id="position" type="text" placeholder="No HP" className="border border-gray-200 rounded-md px-4 py-2" />
+              <input onChange={e => { setData('position', e.target.value) }} value={data.position} id="position" type="text" placeholder="Jabatan" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
           </div>
           <div className='flex gap-5'>
@@ -137,12 +148,12 @@ export default function BasicTabs({ profile, loans, data, setData, handleSubmit 
             </div>
             <div className='flex flex-col w-1/2'>
               <label htmlFor="phone">No HP <span className="text-red-500">*</span></label>
-              <input onChange={e => { setData('phone', e.target.value) }} value={data.phone} id="phone" type="text" placeholder="Alamat" className="border border-gray-200 rounded-md px-4 py-2" />
+              <input onChange={e => { setData('phone', e.target.value) }} value={data.phone} id="phone" type="text" placeholder="No HP" className="border border-gray-200 rounded-md px-4 py-2" />
             </div>
           </div>
           <div className="flex gap-5 justify-end">
             <div>
-              <Buttons title={'Kembali'} variant={'outlined'} href={'/admin/buku'} />
+              <Buttons title={'Kembali'} variant={'outlined'} href={'/buku'} />
             </div>
             <div>
               <Buttons type={'submit'} title={'Simpan'} variant={'contained'} />

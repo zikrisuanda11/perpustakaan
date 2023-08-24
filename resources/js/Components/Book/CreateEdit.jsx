@@ -33,6 +33,7 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
   const handleClose = () => {
     setOpenFormDialog(false);
     setOpenDatatableDialog(false);
+
   };
 
   const handleTypeSubmit = () => {
@@ -40,6 +41,13 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
       code: codeType,
       name: nameType
     })
+    setOpenFormDialog(false);
+    setOpenDatatableDialog(false);
+  }
+
+  const handleTypeDelete = (code) => {
+    router.delete(`/admin/type/${code}`);
+    setOpenDatatableDialog(false);
   }
 
   useEffect(() => {
@@ -81,6 +89,7 @@ export default function CreateEdit({ handleSubmit, types, setData, book, data })
         dialogTitle={'Tambah Jenis Buku'}
       />
       <DatatableDialog
+        handleDelete={handleTypeDelete}
         data={types}
         open={openDatatableDialog}
         handleClose={handleClose}

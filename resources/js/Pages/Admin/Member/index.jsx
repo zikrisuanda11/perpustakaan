@@ -9,16 +9,27 @@ import AlertDialog from "../../../Components/Dialog/AlertDialog";
 import { Button } from "@mui/material";
 import { BiPrinter } from 'react-icons/bi';
 import MonthDialog from "../../../Components/Dialog/MonthDialog";
+import Success from "../../../Components/Notification/Success";
 
 export default function index({ members, flash }) {
+
   const [openAlerDialog, setOpenAlertDialog] = useState(false);
   const [idMember, setIdMember] = useState();
   const [search, setSearch] = useState();
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState();
+  const [openNotif, setOpenNotif] = useState(false);
+  console.log(flash);
 
   const handleCloseDialog = () => {
     setOpen(false);
+  }
+
+  const handleCloseNotif = () => {
+    setOpenNotif(false);
+    router.visit('/clear-flash', {
+      method: 'post'
+    });
   }
   
   const handleSubmit = () => {
@@ -43,15 +54,15 @@ export default function index({ members, flash }) {
     setOpenAlertDialog(false);
   };
 
-  useEffect(() => {
-    if (flash.message) {
-      toast.success(flash.message)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
+  // useEffect(() => {
+  //   if (flash.message) {
+  //     toast.success(flash.message)
+  //     router.visit('/clear-flash', {
+  //       method: 'post'
+  //     });
 
-    }
-  }, [flash.message])
+  //   }
+  // }, [flash.message])
 
   const handleDelete = (id) => {
     router.delete(`/admin/anggota/${id}`);
@@ -61,9 +72,19 @@ export default function index({ members, flash }) {
     router.get(`/admin/anggota/${id}/edit`)
   }
 
+  useEffect(() => {
+    if (flash.message) {
+      setOpenNotif(true)
+    }
+  }, [flash.message])
+
   return (
     <Default>
-      <Toaster />
+      <Success
+        openModal={openNotif}
+        closeModal={handleCloseNotif}
+        message={flash.message}
+      />
       <MonthDialog
         onChange={setDate}
         buttonTitle="Cetak"

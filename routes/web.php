@@ -52,6 +52,7 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::middleware('auth')->group(function () {
   Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
   Route::post('/loan', [UserLoanController::class, 'store']);
+  Route::delete('/loan/{id}', [UserLoanController::class, 'destroy']);
   Route::get('/profile', [ProfileController::class, 'index']);
   Route::put('/profile/{id}', [ProfileController::class, 'update']);
 

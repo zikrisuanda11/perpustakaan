@@ -4,14 +4,34 @@ import Button from "@mui/material/Button";
 import { router, useForm } from "@inertiajs/react";
 import DateDialog from "../../Components/Dialog/DateDialog";
 import toast, { Toaster } from 'react-hot-toast';
+import Success from "../../Components/Notification/Success";
+import Error from "../../Components/Notification/Error";
 
 export default function Book({ books, types, flash }) {
+  const [openNotif, setOpenNotif] = useState(false);
+  const [openNotifError, setOpenNotifError] = useState(false);
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   const { data, setData, post, processing, errors } = useForm({
     code_book: '',
     return_date: '',
   })
+
+  console.log(flash);
+
+  const handleCloseNotif = () => {
+    setOpenNotif(false);
+    router.visit('/clear-flash', {
+      method: 'post'
+    });
+  }
+
+  const handleCloseNotifError = () => {
+    setOpenNotifError(false);
+    router.visit('/clear-flash', {
+      method: 'post'
+    });
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -42,30 +62,32 @@ export default function Book({ books, types, flash }) {
 
   useEffect(() => {
     if (flash.message) {
-      toast.success(flash.message)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
+      setOpenNotif(true)
     }
-    if (flash.error) {
-      toast.error(flash.error)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
+    if (flash.error){
+      setOpenNotifError(true)
     }
-    if (Object.keys(errors).length != 0) {
+    if(Object.keys(errors).length != 0){
       Object.values(errors).forEach(errorMessage => {
-        toast.error(errorMessage);
-      });
-      router.visit('/clear-flash', {
-        method: 'post'
+        flash.error = errorMessage
+        setOpenNotifError(true)
       });
     }
   }, [flash.message, flash.error, Object.keys(errors).length != 0])
 
   return (
     <Member>
-      <Toaster />
+      <Error
+        openModal={openNotifError}
+        closeModal={handleCloseNotifError}
+        message={flash.error}
+      />
+      <Success
+        openModal={openNotif}
+        closeModal={handleCloseNotif}
+        message={flash.message}
+      />
+      {/* <Toaster /> */}
       <DateDialog
         open={open}
         handleCloseAlertDialog={handleCloseDialog}

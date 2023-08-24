@@ -4,8 +4,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import { router, useForm } from "@inertiajs/react";
 import Breadcrumbs from "../../../Components/Breadcrumbs";
 import CreateEdit from "../../../Components/Book/CreateEdit";
+import Success from "../../../Components/Notification/Success";
 
 export default function create({ flash, types }) {
+  const [openNotif, setOpenNotif] = useState(false);
   
   const { data, setData, post, processing, errors } = useForm({
     code: '',
@@ -17,15 +19,24 @@ export default function create({ flash, types }) {
     stock: '',
     location: '',
     book_image: '',
+    city: ''
   })
-  console.log(data);
+
+  const handleCloseNotif = () => {
+    setOpenNotif(false);
+    router.visit('/clear-flash', {
+      method: 'post'
+    });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    post('/admin/buku', data)
+  }
 
   useEffect(() => {
     if (flash.message) {
-      toast.success(flash.message)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
+      setOpenNotif(true)
     }
     if (flash.error) {
       toast.error(flash.error)
@@ -43,13 +54,14 @@ export default function create({ flash, types }) {
     }
   }, [flash.message, flash.error, Object.keys(errors).length != 0])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    post('/admin/buku', data)
-  }
 
   return (
     <Default>
+      <Success
+        openModal={openNotif}
+        closeModal={handleCloseNotif}
+        message={flash.message}
+      />
       <Toaster position="top-right"/>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <h1 className="text-2xl font-semibold text-gray-900">Buku</h1>

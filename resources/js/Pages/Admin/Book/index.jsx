@@ -9,6 +9,7 @@ import AlertDialog from "../../../Components/Dialog/AlertDialog";
 import { Button } from "@mui/material";
 import { BiPrinter } from 'react-icons/bi';
 import MonthDialog from "../../../Components/Dialog/MonthDialog";
+import Success from "../../../Components/Notification/Success";
 
 export default function index({ books, flash }) {
   const [openAlerDialog, setOpenAlertDialog] = useState(false);
@@ -16,6 +17,14 @@ export default function index({ books, flash }) {
   const [search, setSearch] = useState();
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState();
+  const [openNotif, setOpenNotif] = useState(false);
+
+  const handleCloseNotif = () => {
+    setOpenNotif(false);
+    router.visit('/clear-flash', {
+      method: 'post'
+    });
+  }
 
   const handleCloseDialog = () => {
     setOpen(false);
@@ -40,7 +49,7 @@ export default function index({ books, flash }) {
     setOpenAlertDialog(false);
   };
 
-  console.log(search);
+  console.log(flash);
   useEffect(() => {
     router.put('/admin/buku', {
       search: search
@@ -49,16 +58,13 @@ export default function index({ books, flash }) {
 
   useEffect(() => {
     if (flash.message) {
-      toast.success(flash.message)
-      router.visit('/clear-flash', {
-        method: 'post'
-      });
-
+      setOpenNotif(true)
     }
   }, [flash.message])
 
   const handleDelete = (id) => {
     router.delete(`/admin/buku/${id}`);
+    setOpenAlertDialog(false);
   }
 
   const handleEdit = (id) => {
@@ -67,6 +73,11 @@ export default function index({ books, flash }) {
 
   return (
     <Default>
+      <Success
+        openModal={openNotif}
+        closeModal={handleCloseNotif}
+        message={flash.message}
+      />
       <MonthDialog
         onChange={setDate}
         buttonTitle="Cetak"
@@ -75,7 +86,7 @@ export default function index({ books, flash }) {
         handleOnClick={handleSubmit}
         title={"Pilih Bulan"}
       />
-      <Toaster />
+      {/* <Toaster /> */}
       <AlertDialog
         title={"Yakin ingin menghapus buku?"}
         description={"Dengan menghapus data buku data tidak dapat dikembalikan!"}
