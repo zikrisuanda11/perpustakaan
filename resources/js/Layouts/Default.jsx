@@ -13,8 +13,8 @@ import { Link, usePage } from '@inertiajs/react';
 
 
 const userNavigation = [
-  { name: 'Landing Page', href: '/' },
-  { name: 'Book', href: '/buku' },
+  // { name: 'Landing Page', href: '/' },
+  // { name: 'Book', href: '/buku' },
   { name: 'Sign out', href: '/logout', method: 'post' },
 ]
 
