@@ -18,8 +18,8 @@ export default function Hero() {
   return (
     <div className="flex justify-between mx-20 ">
       <div className="flex flex-col justify-center w-6/12 gap-5">
-        <div className="text-8xl font-bold capitalize">Perpustakaan Damai</div>
-        <div className="text-2xl font-discover">Temukan buku favorit anda disini dan baca dengan gratis</div>
+        <div className="text-6xl font-bold capitalize">Perpustakaan Perumda Tirta Manuntung Balikpapan</div>
+        <div className="text-2xl font-discover">Temukan buku favorit anda disini</div>
         {url != '/' ? (
           <div className="flex items-center gap-1 text-gray-500 w-10/12 py-3 px-5 bg-slate-100 rounded-md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

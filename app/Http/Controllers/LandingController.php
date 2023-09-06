@@ -12,7 +12,7 @@ class LandingController extends Controller
         $book_recomendation = [
             '015.046', //bulan
             '015.173',
-            '015.191', //konspirasi
+            '015.043', //salmon
             '017.094', // gen z
             '016.096',
             '010.001'
