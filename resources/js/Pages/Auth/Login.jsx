@@ -34,8 +34,8 @@ export default function Login() {
           <img src="/assets/image/Library_Freepik.jpg" alt="" className="h-[32rem]" />
         </div>
         <div className="flex flex-col items-center font-inter gap-5">
-          <h1 className="text-2xl font-medium ">Perpustakaan Damai</h1>
-          <p className="text-sm text-gray-600 w-7/12 text-center">Akses mudah dan cepat terhadap berbagai jenis buku, majalah, jurnal, dan materi pustaka lainnya</p>
+          <h1 className="text-2xl font-medium ">Perpustakaan Perumda Tirta Manuntung Balikpapan</h1>
+          <p className="text-sm text-gray-600 w-7/12 text-center">Akses mudah dan cepat terhadap berbagai jenis buku, jurnal, dan materi pustaka lainnya</p>
         </div>
       </div>
       <form onSubmit={handleSubmit} className="w-4/12 flex flex-col justify-center items-center gap-10">

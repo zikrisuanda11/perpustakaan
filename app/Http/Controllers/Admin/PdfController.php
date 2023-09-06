@@ -40,7 +40,6 @@ class PdfController extends Controller
 
         $books = Book::whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->limit(25)
             ->get();
 
         $pdf = Pdf::loadView('print-book', compact('books', 'formatTanggal'));
@@ -59,7 +58,6 @@ class PdfController extends Controller
         $users = User::role('anggota')
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->limit(25)
             ->get();
 
         $pdf = Pdf::loadView('print-member', compact('users', 'formatTanggal'));
