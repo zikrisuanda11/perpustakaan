@@ -17,7 +17,7 @@ export default function Book({ books, types, flash }) {
     return_date: '',
   })
 
-  console.log(flash);
+  // console.log(flash);
 
   const handleCloseNotif = () => {
     setOpenNotif(false);

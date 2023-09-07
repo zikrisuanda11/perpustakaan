@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Loan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Models\Type;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -30,7 +31,7 @@ class PdfController extends Controller
         return $pdf->stream();
     }
 
-    public function book($tanggal)
+    public function book($tanggal, $type)
     {
         $parts = explode('-', $tanggal);
         $year = $parts[0];
@@ -38,9 +39,16 @@ class PdfController extends Controller
         $carbonTanggal = Carbon::createFromFormat('Y-m', $tanggal)->locale('id');
         $formatTanggal = $carbonTanggal->translatedFormat('F Y');
 
-        $books = Book::whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->get();
+        if($type === 'null'){
+            $books = Book::whereMonth('created_at', $month)
+                ->whereYear('created_at', $year)
+                ->get();
+        }else{
+            $books = Book::whereMonth('created_at', $month)
+                ->whereYear('created_at', $year)
+                ->where('code_type', $type)
+                ->get();
+        }
 
         $pdf = Pdf::loadView('print-book', compact('books', 'formatTanggal'));
         $pdf->setPaper('A4', 'landscape');

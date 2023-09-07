@@ -43,7 +43,7 @@ export default function Index({ loans, profile, flash }) {
     // { name: 'Informasi', href: '/informasi', active: url === '/informasi', }
   ]
 
-  console.log(flash.message);
+  // console.log(flash.message);
   useEffect(() => {
     if (flash.message) {
       setOpenNotif(true)

@@ -40,7 +40,7 @@ export default function Index({ settings, flash}) {
     }
   }, [flash.message])
 
-  console.log(data);
+  // console.log(data);
   return (
     <Default>
       <Success

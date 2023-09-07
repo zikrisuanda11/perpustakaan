@@ -7,9 +7,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import ComboBox from "../Combobox";
 import dayjs from 'dayjs';
 
-export default function MonthDialog({ date, open, handleCloseAlertDialog, title, handleOnClick, buttonTitle = 'Hapus', onChange }) {
+export default function MonthDialog({ date, setSelectedType, formattedTypes, open, handleCloseAlertDialog, title, handleOnClick, buttonTitle = 'Hapus', onChange }) {
 
   return (
     <div>
@@ -25,14 +26,19 @@ export default function MonthDialog({ date, open, handleCloseAlertDialog, title,
           </div>
         </DialogTitle>
         <DialogContent>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar
-            // value={dayjs('2023-04')}
-              defaultValue={dayjs(date)}
-              views={['month', 'year']}
-              onChange={(newValue) => onChange(dayjs(newValue).format('YYYY-MM'))}
-            />
-          </LocalizationProvider>
+          <div className='flex '>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateCalendar
+                // value={dayjs('2023-04')}
+                defaultValue={dayjs(date)}
+                views={['month', 'year']}
+                onChange={(newValue) => onChange(dayjs(newValue).format('YYYY-MM'))}
+              />
+            </LocalizationProvider>
+            <div className='w-52 mt-2'>
+              <ComboBox types={formattedTypes} setValue={(e, newValue) => newValue ? setSelectedType(newValue.id) : null} />
+            </div>
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseAlertDialog} variant='outlined'>Tutup</Button>

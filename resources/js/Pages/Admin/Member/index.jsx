@@ -19,7 +19,7 @@ export default function index({ members, flash }) {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(dayjs(Date().now).format('YYYY-MM'));
   const [openNotif, setOpenNotif] = useState(false);
-  console.log(flash);
+  // console.log(flash);
 
   const handleCloseDialog = () => {
     setOpen(false);

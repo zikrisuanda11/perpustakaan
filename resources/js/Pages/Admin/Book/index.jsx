@@ -11,13 +11,19 @@ import { BiPrinter } from 'react-icons/bi';
 import MonthDialog from "../../../Components/Dialog/MonthDialog";
 import Success from "../../../Components/Notification/Success";
 
-export default function index({ books, flash }) {
+export default function index({ books, flash, types }) {
   const [openAlerDialog, setOpenAlertDialog] = useState(false);
   const [idBook, setIdBook] = useState();
   const [search, setSearch] = useState();
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(dayjs(Date().now).format('YYYY-MM'));
+  const [selectedType, setSelectedType] = useState(null);
   const [openNotif, setOpenNotif] = useState(false);
+  // console.log(selectedType);
+
+  let formattedTypes = types.map((type) => {
+    return { label: String(type.code).padStart(3, '0') + ' ' + type.name, id: String(type.code).padStart(3, '0') }
+  });
 
   const handleCloseNotif = () => {
     setOpenNotif(false);
@@ -35,8 +41,9 @@ export default function index({ books, flash }) {
       toast.error('Silahkan pilih bulan')
       setOpen(false)
     }else{
-      window.open(`/admin/cetak-buku/${date}`, '_blank')
+      window.open(`/admin/cetak-buku/${date}/${selectedType}`, '_blank')
       setOpen(false)
+      setSelectedType(null)
     }
   }
 
@@ -49,7 +56,7 @@ export default function index({ books, flash }) {
     setOpenAlertDialog(false);
   };
 
-  console.log(flash);
+  // console.log(flash);
   useEffect(() => {
     router.put('/admin/buku', {
       search: search
@@ -79,6 +86,8 @@ export default function index({ books, flash }) {
         message={flash.message}
       />
       <MonthDialog
+        setSelectedType={setSelectedType}
+        formattedTypes={formattedTypes}
         onChange={setDate}
         buttonTitle="Cetak"
         open={open}

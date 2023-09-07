@@ -92,7 +92,7 @@ export default function index({ loans, flash }) {
     setOpenDateDialog(false);
   }
 
-  console.log(search);
+  // console.log(search);
 
   useEffect(() => {
     router.put('/admin/peminjaman', {

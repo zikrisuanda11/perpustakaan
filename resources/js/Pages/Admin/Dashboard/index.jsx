@@ -19,7 +19,7 @@ export default function index({ loans, total_books, returned, borrowed, member }
   const [selected, setSelected] = useState('all')
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(dayjs(Date().now).format('YYYY-MM'));
-  console.log(date);
+  // console.log(date);
 
   const handleCloseDialog = () => {
     setOpen(false);

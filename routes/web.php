@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
   Route::middleware('role:admin')->group(function () {
     Route::prefix('admin')->group(function () {
       Route::get('/cetak-peminjaman/{tanggal}', [PdfController::class, 'loan']);
-      Route::get('/cetak-buku/{tanggal}', [PdfController::class, 'book']);
+      Route::get('/cetak-buku/{tanggal}/{type}', [PdfController::class, 'book']);
       Route::get('/cetak-anggota/{tanggal}', [PdfController::class, 'member']);
 
       Route::get('/pengaturan', [SettingController::class, 'index']);

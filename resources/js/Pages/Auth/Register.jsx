@@ -8,7 +8,7 @@ export default function Register({flash}) {
     email: '',
     password: '',
   })
-  console.log(flash);
+  // console.log(flash);
 
   const handleSubmit = (e) => {
     e.preventDefault()

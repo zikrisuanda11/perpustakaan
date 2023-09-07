@@ -17,10 +17,12 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::paginate(15);
+        $types = Type::all();
 
         $books->load('type');
         return inertia('Admin/Book/index', [
             'books' => $books,
+            'types' => $types
         ]);
     }
 

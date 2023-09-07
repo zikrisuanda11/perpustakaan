@@ -2,7 +2,7 @@ import React from "react";
 import Member from "../../Layouts/Member";
 
 export default function Landing({ books }) {
-  console.log(books);
+  // console.log(books);
   return (
     <Member>
       <div className="bg-gray-100 border border-gray-100">
