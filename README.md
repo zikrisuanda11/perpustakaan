@@ -7,59 +7,44 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## About Library app
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The Modern Library Application is an innovative solution designed to optimize the management and access of information within library environments. Leveraging cutting-edge technology, this application provides users with an efficient, interactive, and user-friendly experience when exploring library resources.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Docker
+```
+docker build -t phikocat:v1.0.0 .
+```
+```
+docker run -d --name phikocat -p 8002:8000 phikocat:v1.0.0
+```
+### Localhost
+```
+composer update && php artisan storage:link
+```
+```
+yarn install
+```
+```
+yarn dev
+```
 
-## Learning Laravel
+### Documentation
+![Screenshot_20240102_131906](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/df874882-4eb3-49f3-9f14-985ec29ab97a)
+![Screenshot_20240102_135856](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/53bde0da-0d59-4cca-8d7b-58b0907a55bf)
+![Screenshot_20240102_135905](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/cab3da0d-7181-4cb0-b533-36dcfd73cd61)
+![Screenshot_20240102_135910](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/58f51992-020b-4d85-bd35-f9392d552f16)
+![Screenshot_20240102_135916](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/aad2bbcf-ee6f-4712-892a-e09025b29ed2)
+![Screenshot_20240102_135921](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/2082b076-d6d9-46f0-8173-5cf5c97c5db8)
+![Screenshot_20240102_135931](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/28b9cef3-0ca1-41e1-9ee7-97e2e3aa3a4b)
+![Screenshot_20240102_135936](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/b1cbc03a-ec4d-4ae9-86a8-cb4205e61dea)
+![Screenshot_20240102_135941](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/8d05f0ca-b2f8-4c53-8bd8-2d89ab08946c)
+![Screenshot_20240102_135952](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/6f911737-da0c-4665-ae3a-a4f68bf8099f)
+![Screenshot_20240102_140031](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/96f04765-74c0-424b-abd4-7d27ce7bcc89)
+![Screenshot_20240102_140037](https://github.com/zikrisuanda11/perpustakaan/assets/91446630/91a9d2b1-5c50-4deb-a75c-9ef218b8690d)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
