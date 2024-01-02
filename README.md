@@ -13,7 +13,6 @@ The Modern Library Application is an innovative solution designed to optimize th
 
 ## Installation
 
-### Localhost
 ```
 composer update && php artisan storage:link
 ```
