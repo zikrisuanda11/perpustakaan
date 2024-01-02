@@ -13,13 +13,6 @@ The Modern Library Application is an innovative solution designed to optimize th
 
 ## Installation
 
-### Docker
-```
-docker build -t phikocat:v1.0.0 .
-```
-```
-docker run -d --name phikocat -p 8002:8000 phikocat:v1.0.0
-```
 ### Localhost
 ```
 composer update && php artisan storage:link
