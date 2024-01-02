@@ -29,6 +29,8 @@ class BookController extends Controller
     public function search(Request $request)
     {
         $query = Book::query();
+        $types = Type::all();
+
         if ($request->search) {
             $query->where('code', 'like', "%{$request->search}%")
                 ->orWhere('code_type', 'like', "%{$request->search}%")
@@ -43,6 +45,7 @@ class BookController extends Controller
 
         return inertia('Admin/Book/index', [
             'books' => $books,
+            'types' => $types
         ]);
     }
 

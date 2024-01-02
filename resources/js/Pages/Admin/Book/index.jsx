@@ -19,7 +19,7 @@ export default function index({ books, flash, types }) {
   const [date, setDate] = useState(dayjs(Date().now).format('YYYY-MM'));
   const [selectedType, setSelectedType] = useState(null);
   const [openNotif, setOpenNotif] = useState(false);
-  // console.log(selectedType);
+  console.log(books);
 
   let formattedTypes = types.map((type) => {
     return { label: String(type.code).padStart(3, '0') + ' ' + type.name, id: String(type.code).padStart(3, '0') }
